@@ -1,0 +1,19 @@
+{
+  "folders": [
+    {
+      "path": "ts",
+      "name": "TypeScript"
+    },
+    {
+      "path": "go",
+      "name": "Golang"
+    },
+    {
+      "path": "cs",
+      "name": "CSharp"
+    }
+  ],
+  "settings": {
+    "cSpell.enabled": false
+  }
+}
