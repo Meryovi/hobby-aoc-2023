@@ -1,0 +1,9 @@
+# TypeScript
+**/node_modules/*
+*.js
+
+# Go
+
+# C#
+**/obj/*
+**/bin/*
