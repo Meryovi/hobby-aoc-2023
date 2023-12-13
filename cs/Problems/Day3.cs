@@ -1,16 +1,8 @@
 namespace AOC2023.Problems;
 
-public class Day3 : IProblem
+public class Day3 : IProblem<int>
 {
-    public string Name => "Day 3";
-
-    public void Solve()
-    {
-        string input = InputReader.ReadDayInput(day: 3);
-        int partNumber = ExtractPartNumber(input);
-
-        Console.WriteLine(partNumber);
-    }
+    public int Solve(ReadOnlySpan<char> input) => ExtractPartNumber(input.ToString());
 
     private static int ExtractPartNumber(string input)
     {

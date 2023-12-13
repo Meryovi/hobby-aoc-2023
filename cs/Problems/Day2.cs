@@ -1,16 +1,8 @@
 namespace AOC2023.Problems;
 
-public class Day2 : IProblem
+public class Day2 : IProblem<int>
 {
-    public string Name => "Day 2";
-
-    public void Solve()
-    {
-        var input = InputReader.ReadDayInput(day: 2);
-        int possibleGames = NumberOfPossibleGames(input);
-
-        Console.WriteLine(possibleGames);
-    }
+    public int Solve(ReadOnlySpan<char> input) => NumberOfPossibleGames(input);
 
     private static int NumberOfPossibleGames(ReadOnlySpan<char> games)
     {

@@ -1,14 +1,3 @@
-import { readDayInput } from "../fileReader.js";
-
-export default {
-  name: "Day 1",
-  solve: () => {
-    const input = readDayInput(1);
-    const digitsSum = sumFirstLastDigits(input);
-    console.log(digitsSum);
-  },
-};
-
 const sumFirstLastDigits = (input: string) =>
   input
     .split("\n")
@@ -21,3 +10,5 @@ const sumFirstLastDigits = (input: string) =>
       return d1 * 10 + d2;
     })
     .reduce((acc, val) => acc + val, 0);
+
+export const solve = sumFirstLastDigits;

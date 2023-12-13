@@ -1,16 +1,8 @@
 namespace AOC2023.Problems;
 
-public class Day4 : IProblem
+public class Day4 : IProblem<int>
 {
-    public string Name => "Day 4";
-
-    public void Solve()
-    {
-        string input = InputReader.ReadDayInput(day: 4);
-        int scratchCardPoints = CalculateScratchCardPoints(input);
-
-        Console.WriteLine(scratchCardPoints);
-    }
+    public int Solve(ReadOnlySpan<char> input) => CalculateScratchCardPoints(input);
 
     private static int CalculateScratchCardPoints(ReadOnlySpan<char> input)
     {

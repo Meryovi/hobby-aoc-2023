@@ -1,8 +1,6 @@
 To run this project:
 
-`dotnet run --prob {problem number}`
-
-Command line args will be added in the future to select the desired problem to run.
+`dotnet test -l "console;verbosity=normal"`
 
 **Goals:**
 All projects regardless of programming language should have a similar structure and approach.

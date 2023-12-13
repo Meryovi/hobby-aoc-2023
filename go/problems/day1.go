@@ -13,16 +13,16 @@ func (d Day1) Name() string {
 }
 
 func (d Day1) Solve() {
-	lines := readDayInput(1)
+	lines := readProblemInput("day1_1")
 	sum := sumFirstLastDigits(lines)
 
 	fmt.Println(sum)
 }
 
-func sumFirstLastDigits(lines []string) int {
+func sumFirstLastDigits(input string) int {
 	sum := 0
 
-	for _, line := range strings.Split((input, "\n")) {
+	for _, line := range strings.Split(input, "\n") {
 		d1, d2 := 0, 0
 
 		for i, j := 0, len(line)-1; j >= 0 && (d1 == 0 || d2 == 0); i, j = i+1, j-1 {

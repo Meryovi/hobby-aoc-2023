@@ -1,16 +1,8 @@
 namespace AOC2023.Problems;
 
-public class Day1 : IProblem
+public class Day1 : IProblem<int>
 {
-    public string Name => "Day 1";
-
-    public void Solve()
-    {
-        var input = InputReader.ReadDayInput(day: 1);
-        int digitsSum = SumOfFirstLastDigits(input);
-
-        Console.WriteLine(digitsSum);
-    }
+    public int Solve(ReadOnlySpan<char> input) => SumOfFirstLastDigits(input.ToString());
 
     private static int SumOfFirstLastDigits(string input)
     {

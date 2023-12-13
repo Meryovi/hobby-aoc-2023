@@ -1,8 +1,6 @@
 namespace AOC2023.Problems;
 
-public interface IProblem
+public interface IProblem<T>
 {
-    string Name { get; }
-
-    void Solve();
+    T Solve(ReadOnlySpan<char> input);
 }

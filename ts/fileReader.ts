@@ -1,3 +1,3 @@
 import fs from "fs";
 
-export const readDayInput = (day: number) => fs.readFileSync(`../input/day${day}.txt`).toString();
+export const readProblemInput = (id: string) => fs.readFileSync(`../input/${id}.txt`).toString();
