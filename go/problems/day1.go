@@ -1,27 +1,18 @@
 package problems
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 )
 
 type Day1 struct{}
 
-func (d Day1) Name() string {
-	return "Day 1"
+func (d Day1) Solve(input string) int {
+	return sumFirstAndLastDigits(input)
 }
 
-func (d Day1) Solve() {
-	lines := readProblemInput("day1_1")
-	sum := sumFirstLastDigits(lines)
-
-	fmt.Println(sum)
-}
-
-func sumFirstLastDigits(input string) int {
+func sumFirstAndLastDigits(input string) int {
 	sum := 0
-
 	for _, line := range strings.Split(input, "\n") {
 		d1, d2 := 0, 0
 

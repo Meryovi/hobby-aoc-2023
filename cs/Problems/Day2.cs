@@ -13,10 +13,10 @@ public class Day2 : IProblem<int>
         int possibleGames = 0;
         int currentGame = 1;
 
-        games.Split(gameLines, Environment.NewLine);
-        foreach (var gameRange in gameLines)
+        int lines = games.Split(gameLines, Environment.NewLine);
+        for (int i = 0; i < lines; i++)
         {
-            var game = games[gameRange];
+            var game = games[gameLines[i]];
             game = game[(game.IndexOf(": ") + 2)..];
 
             int draws = game.SplitAny(drawRanges, cubeSeparators);

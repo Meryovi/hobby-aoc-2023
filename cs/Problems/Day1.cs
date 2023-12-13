@@ -2,24 +2,26 @@ namespace AOC2023.Problems;
 
 public class Day1 : IProblem<int>
 {
-    public int Solve(ReadOnlySpan<char> input) => SumOfFirstLastDigits(input.ToString());
+    public int Solve(ReadOnlySpan<char> input) => SumFirstAndLastDigits(input);
 
-    private static int SumOfFirstLastDigits(string input)
+    private static int SumFirstAndLastDigits(ReadOnlySpan<char> input)
     {
+        Span<Range> gameLines = stackalloc Range[1000];
         int sum = 0;
-        var lines = input.Split(Environment.NewLine);
 
-        for (int x = 0; x < lines.Length; x++)
+        int lines = input.Split(gameLines, Environment.NewLine);
+        for (int c = 0; c < lines; c++)
         {
+            var line = input[gameLines[c]];
             (int d1, int d2) = (0, 0);
 
-            for (int i = 0, j = lines[x].Length - 1; j >= 0 && (d1 == 0 || d2 == 0); i++, j--)
+            for (int i = 0, j = line.Length - 1; j >= 0 && (d1 == 0 || d2 == 0); i++, j--)
             {
-                if (d1 == 0 && int.TryParse(lines[x][i..(i + 1)], out int v1))
-                    d1 = v1;
+                if (d1 == 0 && char.IsDigit(line[i]))
+                    d1 = line[i] - '0';
 
-                if (d2 == 0 && int.TryParse(lines[x][j..(j + 1)], out int v2))
-                    d2 = v2;
+                if (d2 == 0 && char.IsDigit(line[j]))
+                    d2 = line[j] - '0';
             }
 
             sum += d1 * 10 + d2;

@@ -1,6 +1,5 @@
 package problems
 
-type Solvable interface {
-	Name() string
-	Solve()
+type Solvable[rt int | float32 | string] interface {
+	Solve(input string) rt
 }

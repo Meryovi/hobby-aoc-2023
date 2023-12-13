@@ -7,7 +7,7 @@ import (
 )
 
 func readProblemInput(id string) string {
-	file, err := os.ReadFile(fmt.Sprintf("../input/%s.txt", id))
+	file, err := os.ReadFile(fmt.Sprintf("../../input/%s.txt", id))
 	if err != nil {
 		log.Fatalf("could not read problem file %s.txt", id)
 	}

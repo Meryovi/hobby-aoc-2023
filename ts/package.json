@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "tsc && node index.js",
-    "test": "tsc && node --test"
+    "start": "tsc && node --test"
   },
   "type": "module",
   "keywords": [],

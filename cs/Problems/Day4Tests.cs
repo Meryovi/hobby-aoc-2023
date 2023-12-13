@@ -1,22 +1,22 @@
 namespace AOC2023.Problems;
 
-public class Day1Tests
+public class Day4Tests
 {
-    private readonly Day1 sut = new();
+    private readonly Day4 sut = new();
 
-    [Theory, InlineData(142)]
+    [Theory, InlineData(13)]
     public void TestSet_ShouldYield_Result(int expected)
     {
-        var input = InputReader.ReadProblemInput("day1_1");
+        var input = InputReader.ReadProblemInput("day4_1");
         var result = sut.Solve(input);
 
         Assert.Equal(expected, result);
     }
 
-    [Theory, InlineData(55017)]
+    [Theory, InlineData(17803)]
     public void FullSet_ShouldYield_Result(int expected)
     {
-        var input = InputReader.ReadProblemInput("day1_2");
+        var input = InputReader.ReadProblemInput("day4_2");
         var result = sut.Solve(input);
 
         Assert.Equal(expected, result);
