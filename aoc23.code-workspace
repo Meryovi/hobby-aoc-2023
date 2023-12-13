@@ -1,23 +1,23 @@
 {
-  "folders": [
-    {
-	"path": ".",
-	"name": "Home"
-    },
-    {
-      "path": "ts",
-      "name": "TypeScript"
-    },
-    {
-      "path": "go",
-      "name": "Golang"
-    },
-    {
-      "path": "cs",
-      "name": "CSharp"
+    "folders": [
+        {
+            "path": ".",
+            "name": "Home"
+        },
+        {
+            "path": "ts",
+            "name": "TypeScript"
+        },
+        {
+            "path": "go",
+            "name": "Golang"
+        },
+        {
+            "path": "cs",
+            "name": "CSharp"
+        }
+    ],
+    "settings": {
+        "cSpell.enabled": true
     }
-  ],
-  "settings": {
-    "cSpell.enabled": false
-  }
 }

@@ -7,33 +7,34 @@ public class Day4 : IProblem
     public void Solve()
     {
         string input = InputReader.ReadDayInput(day: 4);
-        int scratchCardPoints = CalculateScatchCardPoints(input);
+        int scratchCardPoints = CalculateScratchCardPoints(input);
 
         Console.WriteLine(scratchCardPoints);
     }
 
-    private static int CalculateScatchCardPoints(string input)
+    private static int CalculateScratchCardPoints(ReadOnlySpan<char> input)
     {
         int cardPoints = 0;
+        Span<Range> gameLines = stackalloc Range[200];
 
-        foreach (var card in input.Split(Environment.NewLine))
+        int count = input.Split(gameLines, Environment.NewLine);
+        for (int i = 0; i < count; i++)
         {
-            var numbers = card[(card.IndexOf(": ") + 2)..].Split('|');
-            var winning = numbers[0]
-                .Split(' ', StringSplitOptions.RemoveEmptyEntries)
-                .Select(int.Parse)
-                .ToHashSet();
-            var played = numbers[1]
-                .Split(' ', StringSplitOptions.RemoveEmptyEntries)
-                .Select(int.Parse)
-                .ToList();
+            var game = input[gameLines[i]];
+            var numbers = game[(game.IndexOf(":") + 1)..];
 
-            int playPoints = 0;
+            var separator = numbers.IndexOf('|');
+            var winnersSlice = numbers[..(separator - 1)];
+            var foundSlice = numbers[(separator + 1)..];
 
-            foreach (var play in played)
-                playPoints = winning.Contains(play) ? Math.Max(1, playPoints * 2) : playPoints;
+            int gamePoints = 0;
+            for (int j = 0; j < foundSlice.Length; j += 3)
+            {
+                bool exists = winnersSlice.Contains(foundSlice[j..(j + 3)], StringComparison.Ordinal);
+                gamePoints = exists ? Math.Max(1, gamePoints * 2) : gamePoints;
+            }
 
-            cardPoints += playPoints;
+            cardPoints += gamePoints;
         }
 
         return cardPoints;

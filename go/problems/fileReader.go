@@ -6,10 +6,10 @@ import (
 	"os"
 )
 
-func readDayInput(day int32) string {
+func readDayInput(day uint8) string {
 	file, err := os.ReadFile(fmt.Sprintf("../input/day%d.txt", day))
 	if err != nil {
-		log.Fatalf("could not read problem file %d", day)
+		log.Fatalf("could not read problem file day%d.txt", day)
 	}
 	return string(file)
 }
