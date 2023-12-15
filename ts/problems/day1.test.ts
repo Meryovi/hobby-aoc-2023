@@ -2,7 +2,7 @@ import test, { describe } from "node:test";
 import assert from "node:assert";
 
 import { solve } from "./day1.js";
-import { readProblemInput } from "../fileReader.js";
+import { readProblemInput } from "../inputReader.js";
 
 describe("Day 1", () => {
   test("test set should yield expected result", () => {

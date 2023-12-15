@@ -30,7 +30,7 @@ public class Day5 : IProblem<uint>
             if (line.Contains(':'))
                 currentMapType++;
             else if (!line.IsEmpty)
-                maps[currentMapType].Add(RangeMap.Create(line));
+                maps[currentMapType].Add(RangeMap.Parse(line));
         }
 
         var seedsString = input[(input.IndexOf(':') + 2)..input.IndexOf(Environment.NewLine)];
@@ -59,7 +59,7 @@ public class Day5 : IProblem<uint>
 
     readonly record struct RangeMap(uint Start, uint End, uint Diff)
     {
-        public static RangeMap Create(ReadOnlySpan<char> mapString)
+        public static RangeMap Parse(ReadOnlySpan<char> mapString)
         {
             Span<Range> rangeParts = stackalloc Range[3];
             mapString.Split(rangeParts, " ");

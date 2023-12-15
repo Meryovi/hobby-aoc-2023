@@ -1,29 +1,42 @@
 namespace AOC2023.Problems;
 
-public class Day6(ITestOutputHelper output) : IProblem<int>
+public class Day6 : IProblem<int>
 {
     public int Solve(ReadOnlySpan<char> input) => NumberOfWaysToWin(input);
 
-    private int NumberOfWaysToWin(ReadOnlySpan<char> input)
+    private static int NumberOfWaysToWin(ReadOnlySpan<char> input)
     {
         var lineBreak = input.IndexOf(Environment.NewLine);
-        var times = InputParser.ParseNumbers(input[5..lineBreak].TrimStart(), maxSize: 4);
-        var distances = InputParser.ParseNumbers(input[(lineBreak + 11)..].TrimStart(), maxSize: 4);
+        var times = InputParser.ParseNumbers<ushort>(input[5..lineBreak], maxSize: 10, separator: "  ");
+        var distances = InputParser.ParseNumbers<ushort>(input[(lineBreak + 11)..], maxSize: 10, separator: "  ");
 
-        int totalWins = 0;
+        int waysToWinProduct = 0;
 
-        for (int i = 0; i < times.Count; i++)
+        for (int i = 0; i < times.Length; i++)
         {
-            int wins = 0;
+            int wayToWin = 0;
 
-            for (int j = 1; j < times[i]; j++)
-                if (j * (times[i] - j) > distances[i])
-                    wins++;
+            for (int j = times[i] / 2; j > 0; j--)
+            {
+                if (j * (times[i] - j) <= distances[i])
+                {
+                    wayToWin += (times[i] / 2) - j;
+                    break;
+                }
+            }
 
-            output.WriteLine(times[i] + " wins " + wins);
-            totalWins = Math.Max(totalWins, 1) * Math.Max(wins, 1);
+            for (int k = times[i] / 2 + 1; k < times[i]; k++)
+            {
+                if (k * (times[i] - k) <= distances[i])
+                {
+                    wayToWin += k - (times[i] / 2 + 1);
+                    break;
+                }
+            }
+
+            waysToWinProduct = Math.Max(waysToWinProduct, 1) * Math.Max(wayToWin, 1);
         }
 
-        return totalWins + 1;
+        return waysToWinProduct;
     }
 }

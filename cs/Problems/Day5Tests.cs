@@ -5,7 +5,7 @@ public class Day5Tests
     private readonly Day5 sut = new();
 
     [Theory, InlineData(35)]
-    public void TestSet_ShouldYield_Result(long expected)
+    public void TestSet_ShouldYield_Result(uint expected)
     {
         var input = InputReader.ReadProblemInput("day5_1");
         var result = sut.Solve(input);
@@ -14,7 +14,7 @@ public class Day5Tests
     }
 
     [Theory, InlineData(486613012)]
-    public void FullSet_ShouldYield_Result(long expected)
+    public void FullSet_ShouldYield_Result(uint expected)
     {
         var input = InputReader.ReadProblemInput("day5_2");
         var result = sut.Solve(input);
