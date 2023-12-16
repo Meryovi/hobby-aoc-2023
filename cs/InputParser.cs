@@ -27,4 +27,26 @@ public static class InputParser
 
         return numbers;
     }
+
+    public static int ParseNumbers<T>(Span<T> numbers, ReadOnlySpan<char> input, string separator = " ")
+        where T : INumber<T>
+    {
+        Span<Range> ranges = stackalloc Range[numbers.Length];
+
+        int splitSize = input.Split(ranges, separator);
+        int actualSize = 0;
+
+        for (int i = 0; i < splitSize; i++)
+        {
+            var value = input[ranges[i]];
+
+            if (!value.IsEmpty)
+            {
+                numbers[actualSize] = T.Parse(value, null);
+                actualSize++;
+            }
+        }
+
+        return actualSize;
+    }
 }
