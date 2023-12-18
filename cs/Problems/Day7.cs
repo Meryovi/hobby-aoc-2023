@@ -24,13 +24,9 @@ public class Day7 : IProblem<int>
         return totalWinnings;
     }
 
-    readonly struct CardDraw(long drawValue, int bid)
+    readonly record struct CardDraw(long DrawValue, int Bid)
     {
         const string CARD_TYPES = "23456789TJQKA";
-
-        public long DrawValue => drawValue;
-
-        public int Bid => bid;
 
         public static CardDraw Parse(ReadOnlySpan<char> cardDrawString)
         {
@@ -45,28 +41,38 @@ public class Day7 : IProblem<int>
 
         static long CalculateDrawValue(ReadOnlySpan<char> drawnCards)
         {
-            var cardTypeCount = new Dictionary<char, int>();
+            int typeCount = 0;
+            int maxCount = 1;
+            int currentCount = 1;
             long drawValue = 0;
-            int maxCount = 0;
 
-            foreach (var card in drawnCards)
+            var cards = drawnCards.ToArray();
+            Array.Sort(cards);
+
+            for (int i = 0; i < cards.Length; i++)
             {
-                if (!cardTypeCount.TryAdd(card, 1))
+                if (i > 0 && cards[i] == cards[i - 1])
                 {
-                    cardTypeCount[card]++;
-                    maxCount = Math.Max(maxCount, cardTypeCount[card]);
+                    currentCount++;
                 }
-                drawValue = (drawValue * 100) + (CARD_TYPES.IndexOf(card) + 10);
+                else
+                {
+                    typeCount++;
+                    currentCount = 1;
+                }
+
+                maxCount = Math.Max(maxCount, currentCount);
+                drawValue = (drawValue * 100) + (CARD_TYPES.IndexOf(drawnCards[i]) + 10);
             }
 
-            int drawType = cardTypeCount switch
+            int drawType = typeCount switch
             {
-                { Count: 1 } => 7,
-                { Count: 2 } when maxCount is 4 => 6,
-                { Count: 2 } => 5,
-                { Count: 3 } when maxCount is 3 => 4,
-                { Count: 3 } => 3,
-                { Count: 4 } => 2,
+                1 => 7,
+                2 when maxCount is 4 => 6,
+                2 => 5,
+                3 when maxCount is 3 => 4,
+                3 => 3,
+                4 => 2,
                 _ => 1
             };
 

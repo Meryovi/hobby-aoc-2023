@@ -1,8 +1,8 @@
+Pre-requisites: Go 1.21.5+
+
 To run this project:
 
-`go run *.go`
-
-Command line args will be added in the future to select the desired problem to run.
+`go test`
 
 **Goals:**
 All projects regardless of programming language should have a similar structure and approach.

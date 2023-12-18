@@ -9,12 +9,13 @@ public class Day9 : IProblem<long>
         Span<Range> lineRanges = stackalloc Range[200];
         int lines = input.Split(lineRanges, Environment.NewLine);
 
+        Span<int> environmentReadings = stackalloc int[25];
         long totalInstabilities = 0;
 
         for (int i = 0; i < lines; i++)
         {
-            var environmentReadings = InputParser.ParseNumbers<int>(input[lineRanges[i]], maxSize: 30);
-            int prediction = PredictNextSequenceValue(environmentReadings);
+            int readings = InputParser.ParseNumbers(environmentReadings, input[lineRanges[i]]);
+            int prediction = PredictNextSequenceValue(environmentReadings, readings);
 
             totalInstabilities += prediction;
         }
@@ -22,18 +23,18 @@ public class Day9 : IProblem<long>
         return totalInstabilities;
     }
 
-    private static int PredictNextSequenceValue(ReadOnlySpan<int> sequence)
+    private static int PredictNextSequenceValue(ReadOnlySpan<int> sequence, int readings)
     {
-        Span<int> differences = stackalloc int[sequence.Length - 1];
+        Span<int> differences = stackalloc int[readings - 1];
 
-        for (int i = 1; i < sequence.Length; i++)
+        for (int i = 1; i < readings; i++)
             differences[i - 1] = sequence[i] - sequence[i - 1];
 
         int prediction = 0;
 
-        if (differences[sequence.Length - 2] != 0)
-            prediction = PredictNextSequenceValue(differences);
+        if (differences[readings - 2] != 0)
+            prediction = PredictNextSequenceValue(differences, readings - 1);
 
-        return sequence[^1] + prediction;
+        return sequence[readings - 1] + prediction;
     }
 }

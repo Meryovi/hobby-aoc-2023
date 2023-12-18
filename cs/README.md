@@ -1,6 +1,14 @@
+Pre-requisites: .NET 8+
+
 To run this project:
 
 `dotnet test -l "console;verbosity=normal"`
+
+To run Benchmarks:
+
+`dotnet run`
+
+You can also go to Program.cs and tweak the runner to run the benchmark for a specific problem.
 
 **Goals:**
 All projects regardless of programming language should have a similar structure and approach.

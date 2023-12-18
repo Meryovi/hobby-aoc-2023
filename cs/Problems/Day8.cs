@@ -19,7 +19,7 @@ public class Day8 : IProblem<int>
 
         Node? current = nodes.GetFirst();
 
-        while (current != null)
+        while (current is not null)
         {
             int instruction = steps % instructions.Length;
             current = nodes.GetNext(current!.Value, instructions[instruction]);
@@ -31,10 +31,10 @@ public class Day8 : IProblem<int>
 
     readonly ref struct NodeList(int size)
     {
-        const string FIRST_NODE = "AAA";
-        const string LAST_NODE = "ZZZ";
+        static readonly int FIRST_NODE = "AAA".GetHashCode();
+        static readonly int LAST_NODE = "ZZZ".GetHashCode();
 
-        private readonly Dictionary<string, Node> store = new(size);
+        private readonly Dictionary<int, Node> store = new(size);
 
         public void AppendNode(ReadOnlySpan<char> nodeString) => AppendNode(Node.Parse(nodeString));
 
@@ -50,13 +50,13 @@ public class Day8 : IProblem<int>
         }
     }
 
-    readonly record struct Node(string Value, string Left, string Right)
+    readonly record struct Node(int Value, int Left, int Right)
     {
         public static Node Parse(ReadOnlySpan<char> nodeString)
         {
-            string value = nodeString[..3].ToString();
-            string left = nodeString[7..10].ToString();
-            string right = nodeString[12..15].ToString();
+            int value = string.GetHashCode(nodeString[..3]);
+            int left = string.GetHashCode(nodeString[7..10]);
+            int right = string.GetHashCode(nodeString[12..15]);
 
             return new(value, left, right);
         }
