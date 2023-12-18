@@ -6,5 +6,5 @@ var benchmarkConfig = ManualConfig
     .WithOptions(ConfigOptions.JoinSummary)
     .WithOptions(ConfigOptions.DisableLogFile);
 
-BenchmarkRunner.Run(typeof(Program).Assembly, benchmarkConfig); // All benchmarks
-// BenchmarkRunner.Run<Day5Benchmarks>(); // A specific one
+// BenchmarkRunner.Run(typeof(Program).Assembly, benchmarkConfig); // All benchmarks
+BenchmarkRunner.Run<Day15Benchmarks>(); // A specific one
