@@ -1,87 +1,88 @@
 namespace AOC2023.Problems;
 
-public class Day13(ITestOutputHelper output) : IProblem<int>
+public class Day13 : IProblem<int>
 {
-    public int Solve(ReadOnlySpan<char> input) => SummarizeReflections(input);
+    public int Solve(ReadOnlySpan<char> input) => SumOfReflectionValues(input);
 
-    private int SummarizeReflections(ReadOnlySpan<char> input)
+    private static int SumOfReflectionValues(ReadOnlySpan<char> input)
     {
-        var lines = input.ToString().Split(Environment.NewLine);
+        Span<Range> puzzleRanges = stackalloc Range[100];
+        Span<Range> lineRanges = stackalloc Range[20];
+        int puzzles = input.Split(puzzleRanges, Environment.NewLine + Environment.NewLine);
 
         int summary = 0;
-        int patternStart = 0;
-        int patternEnd = 0;
 
-        do
+        for (int i = 0; i < puzzles; i++)
         {
-            patternEnd = Array.IndexOf(lines, string.Empty, patternStart);
-            patternEnd = patternEnd == -1 ? lines.Length : patternEnd;
-            summary += CalculateReflectionValue(lines, patternStart, patternEnd, output);
-            patternStart = patternEnd + 1;
-        } while (patternStart < lines.Length);
+            int lines = input[puzzleRanges[i]].Split(lineRanges, Environment.NewLine);
 
-        output.WriteLine("sum: " + summary);
+            var puzzle = new char[lines][];
+
+            for (int x = 0; x < lines; x++)
+                puzzle[x] = input[puzzleRanges[i]][lineRanges[x]].ToArray();
+
+            int mirrorValue = GetHorizontalMirrorValue(puzzle);
+
+            if (mirrorValue < 0)
+                mirrorValue = GetVerticalMirrorValue(puzzle);
+
+            summary += mirrorValue;
+        }
+
         return summary;
     }
 
-    private static int CalculateReflectionValue(string[] lines, int y0, int yn, ITestOutputHelper output)
+    private static int GetHorizontalMirrorValue(char[][] input)
     {
-        int width = lines[y0].Length;
-        for (int i = 0; i < width - 1; i++)
+        for (int i = 0; i < input.Length - 1; i++)
         {
-            // output.WriteLine($"{lines[0][i]}-{lines[0][i + inx]} ");
-
-            if (lines[y0][i] != lines[y0][i + 1])
-                continue;
-
-            bool isReflection = true;
-            for (int j = y0 + 1; j < yn; j++)
+            for (int ji = i + 1, jd = i; ; jd--, ji++)
             {
-                if (lines[j] == string.Empty)
-                    break;
+                int reflections = 0;
 
-                // output.WriteLine($"{i} - {j} - {lines[j][i]}-{lines[j][i + 1]}");
-                if (lines[j][i] != lines[j][i + 1])
+                for (int x = 0; x < input[0].Length; x++)
                 {
-                    isReflection = false;
-                    break;
-                }
-            }
+                    if (input[jd][x] != input[ji][x])
+                        break;
 
-            if (isReflection)
-            {
-                int value = i * 100;
-                output.WriteLine("val: " + value);
-                return value;
+                    reflections++;
+                }
+
+                if (reflections != input[0].Length)
+                    break;
+
+                if (jd == 0 || ji == input.Length - 1)
+                    return (i + 1) * 100;
             }
         }
 
-        for (int i = y0; i < yn - 1; i++)
+        return -1;
+    }
+
+    private static int GetVerticalMirrorValue(char[][] input)
+    {
+        for (int i = 0; i < input[0].Length - 1; i++)
         {
-            output.WriteLine($"{lines[i][0]}-{lines[i + 1][0]} ");
-
-            if (lines[i][0] != lines[i + 1][0])
-                continue;
-
-            bool isReflection = true;
-            for (int j = 1; j < width; j++)
+            for (int ji = i + 1, jd = i; ; jd--, ji++)
             {
-                output.WriteLine($"{i} - {j} - {lines[i][j]}-{lines[i + 1][j]}");
-                if (lines[i][j] != lines[i + 1][j])
+                int reflections = 0;
+
+                foreach (var line in input)
                 {
-                    isReflection = false;
-                    break;
-                }
-            }
+                    if (line[ji] != line[jd])
+                        break;
 
-            if (isReflection)
-            {
-                int value = i;
-                output.WriteLine("val: " + value);
-                return value;
+                    reflections++;
+                }
+
+                if (reflections != input.Length)
+                    break;
+
+                if (jd == 0 || ji == input[0].Length - 1)
+                    return i + 1;
             }
         }
 
-        return 0;
+        return -1;
     }
 }

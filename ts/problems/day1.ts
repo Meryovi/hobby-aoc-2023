@@ -1,6 +1,6 @@
 const sumFirstLastDigits = (input: string) =>
   input
-    .split("\n")
+    .split("\r\n")
     .map((str) => {
       let [d1, d2] = [0, 0];
       for (let i = 0, j = str.length - 1; j >= 0 && (!d1 || !d2); i++, j--) {
