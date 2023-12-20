@@ -24,4 +24,4 @@ trim_trailing_whitespace = true
 
 [*.txt]
 insert_final_newline = false
-end_of_line = lf
+end_of_line = crlf
