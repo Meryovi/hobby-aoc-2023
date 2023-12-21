@@ -1,39 +1,45 @@
 namespace AOC2023.Problems;
 
-public class Day14(ITestOutputHelper? output) : IProblem<int>
+public class Day14 : IProblem<int>
 {
-    public int Solve(ReadOnlySpan<char> input) => TiltPlatformAndSumRocksWeight(input);
+    public int Solve(ReadOnlySpan<char> input) => TiltPlatformAndSumRockWeight(input);
 
-    private int TiltPlatformAndSumRocksWeight(ReadOnlySpan<char> input)
+    private static int TiltPlatformAndSumRockWeight(ReadOnlySpan<char> input)
     {
         Span<Range> lineRanges = stackalloc Range[100];
-        int lines = input.Split(lineRanges, Environment.NewLine);
+        int height = input.Split(lineRanges, Environment.NewLine);
+        int width = input[lineRanges[0]].Length;
 
-        var matrix = new char[lines][];
+        var matrix = new char[height, width];
 
-        for (int i = 0; i < lines; i++)
-            matrix[i] = input[lineRanges[i]].ToArray();
+        for (int j = 0; j < height; j++)
+        for (int i = 0; i < width; i++)
+            matrix[j, i] = input[lineRanges[j]][i];
 
-        for (int i = lines - 1; i > 0; i--)
+        int weight = 0;
+
+        for (int j = 0; j < height; j++)
         {
-            var line = matrix[i];
-            var prev = matrix[i - 1];
-            for (int j = 0; j < line.Length; j++)
+            for (int i = 0; i < width; i++)
             {
-                (line[j], prev[j]) = (line[j], prev[j]) switch
+                if (matrix[j, i] != 'O')
+                    continue;
+
+                weight += height - j;
+
+                int moves = 0;
+                for (int k = j - 1; k >= 0; k--)
                 {
-                    ('O', '.') => ('.', 'O'),
-                    ('O', '#') => ('O', '#'),
-                    ('.', _) => (line[j], prev[j]),
-                    ('#', _) => (line[j], prev[j]),
-                    _ => (line[j], prev[j])
-                };
+                    if (matrix[k, i] != '.')
+                        break;
+
+                    (matrix[k, i], matrix[j - moves, i]) = (matrix[j - moves, i], matrix[k, i]);
+                    weight++;
+                    moves++;
+                }
             }
         }
 
-        int sumOfWeight = 0;
-
-        output?.WriteLine("sum: " + sumOfWeight);
-        return sumOfWeight;
+        return weight;
     }
 }

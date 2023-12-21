@@ -14,17 +14,20 @@ public class Day13 : IProblem<int>
 
         for (int i = 0; i < puzzles; i++)
         {
-            int lines = input[puzzleRanges[i]].Split(lineRanges, Environment.NewLine);
+            var rawPuzzle = input[puzzleRanges[i]];
+            int height = rawPuzzle.Split(lineRanges, Environment.NewLine);
+            int width = rawPuzzle[lineRanges[0]].Length;
 
-            var puzzle = new char[lines][];
+            var puzzle = new char[height, width];
 
-            for (int x = 0; x < lines; x++)
-                puzzle[x] = input[puzzleRanges[i]][lineRanges[x]].ToArray();
+            for (int x = 0; x < height; x++)
+            for (int y = 0; y < width; y++)
+                puzzle[x, y] = rawPuzzle[lineRanges[x]][y];
 
-            int mirrorValue = GetHorizontalMirrorValue(puzzle);
+            int mirrorValue = GetHorizontalMirrorValue(puzzle, height, width);
 
             if (mirrorValue < 0)
-                mirrorValue = GetVerticalMirrorValue(puzzle);
+                mirrorValue = GetVerticalMirrorValue(puzzle, height, width);
 
             summary += mirrorValue;
         }
@@ -32,26 +35,26 @@ public class Day13 : IProblem<int>
         return summary;
     }
 
-    private static int GetHorizontalMirrorValue(char[][] input)
+    private static int GetHorizontalMirrorValue(char[,] input, int height, int width)
     {
-        for (int i = 0; i < input.Length - 1; i++)
+        for (int i = 0; i < height - 1; i++)
         {
             for (int ji = i + 1, jd = i; ; jd--, ji++)
             {
                 int reflections = 0;
 
-                for (int x = 0; x < input[0].Length; x++)
+                for (int x = 0; x < width; x++)
                 {
-                    if (input[jd][x] != input[ji][x])
+                    if (input[jd, x] != input[ji, x])
                         break;
 
                     reflections++;
                 }
 
-                if (reflections != input[0].Length)
+                if (reflections != width)
                     break;
 
-                if (jd == 0 || ji == input.Length - 1)
+                if (jd == 0 || ji == height - 1)
                     return (i + 1) * 100;
             }
         }
@@ -59,26 +62,26 @@ public class Day13 : IProblem<int>
         return -1;
     }
 
-    private static int GetVerticalMirrorValue(char[][] input)
+    private static int GetVerticalMirrorValue(char[,] input, int height, int width)
     {
-        for (int i = 0; i < input[0].Length - 1; i++)
+        for (int i = 0; i < width - 1; i++)
         {
             for (int ji = i + 1, jd = i; ; jd--, ji++)
             {
                 int reflections = 0;
 
-                foreach (var line in input)
+                for (int y = 0; y < height; y++)
                 {
-                    if (line[ji] != line[jd])
+                    if (input[y, ji] != input[y, jd])
                         break;
 
                     reflections++;
                 }
 
-                if (reflections != input.Length)
+                if (reflections != height)
                     break;
 
-                if (jd == 0 || ji == input[0].Length - 1)
+                if (jd == 0 || ji == width - 1)
                     return i + 1;
             }
         }
