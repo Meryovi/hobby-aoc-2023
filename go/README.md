@@ -2,7 +2,7 @@ Pre-requisites: Go 1.21.5+
 
 To run this project:
 
-`go test`
+`go test **/*`
 
 **Goals:**
 All projects regardless of programming language should have a similar structure and approach.
