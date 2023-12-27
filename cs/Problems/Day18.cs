@@ -39,7 +39,7 @@ public class Day18 : IProblem<int>
                 'D' => new(X, Y + steps),
                 'L' => new(X - steps, Y),
                 'R' => new(X + steps, Y),
-                _ => this with { }
+                _ => this
             };
     }
 }

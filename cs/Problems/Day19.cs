@@ -4,23 +4,20 @@ public class Day19 : IProblem<int>
 {
     public int Solve(ReadOnlySpan<char> input) => ProcessAllPartRatings(input);
 
-    private int ProcessAllPartRatings(ReadOnlySpan<char> input)
+    private static int ProcessAllPartRatings(ReadOnlySpan<char> input)
     {
         Span<Range> workflowRanges = stackalloc Range[600];
-        Span<Range> partsRanges = stackalloc Range[200];
+        Span<Range> partsRanges = stackalloc Range[210];
 
         int separationInx = input.IndexOf(Environment.NewLine + Environment.NewLine);
         var workflowStrings = input[..separationInx];
-        var partStrings = input[(separationInx + 2)..];
+        var partStrings = input[(separationInx + Environment.NewLine.Length * 2)..];
 
         int workflowCount = workflowStrings.Split(workflowRanges, Environment.NewLine);
         int partsCount = partStrings.Split(partsRanges, Environment.NewLine);
 
-        var workflowMap = new SortedList<int, Workflow>
-        {
-            { Workflow.Accepted.Code, Workflow.Accepted },
-            { Workflow.Rejected.Code, Workflow.Rejected }
-        };
+        SortedList<int, Workflow> workflowMap =
+            new() { { Workflow.Accepted.Code, Workflow.Accepted }, { Workflow.Rejected.Code, Workflow.Rejected } };
 
         for (int i = 0; i < workflowCount; i++)
         {
@@ -58,19 +55,19 @@ public class Day19 : IProblem<int>
 
         public static Workflow Parse(ReadOnlySpan<char> workflowString)
         {
-            Span<Range> stepsRanges = stackalloc Range[10];
+            Span<Range> rulesRanges = stackalloc Range[10];
             int stepsInx = workflowString.IndexOf('{');
             var name = workflowString[..stepsInx];
 
-            var stepsString = workflowString[(stepsInx + 1)..^1];
-            int stepCount = stepsString.Split(stepsRanges, ',');
+            var rulesString = workflowString[(stepsInx + 1)..^1];
+            int ruleCount = rulesString.Split(rulesRanges, ',');
 
-            var steps = new WorkflowRule[stepCount];
+            var rules = new WorkflowRule[ruleCount];
 
-            for (int i = 0; i < stepCount; i++)
-                steps[i] = WorkflowRule.Parse(stepsString[stepsRanges[i]]);
+            for (int i = 0; i < ruleCount; i++)
+                rules[i] = WorkflowRule.Parse(rulesString[rulesRanges[i]]);
 
-            return new Workflow(string.GetHashCode(name), steps);
+            return new Workflow(string.GetHashCode(name), rules);
         }
 
         public readonly int Process(Part part)
