@@ -28,7 +28,7 @@ public class Day12 : IProblem<int>
         return GetArrangementCount(problem, group);
     }
 
-    private static int GetArrangementCount(ReadOnlySpan<char> input, ParsedNumbers group)
+    private static int GetArrangementCount(ReadOnlySpan<char> input, ParsedNumbers<int> group)
     {
         int wildcard = input.IndexOf('?');
 
@@ -46,7 +46,7 @@ public class Day12 : IProblem<int>
         return hashCount + dotCount;
     }
 
-    private static bool IsGroupFulfilled(ReadOnlySpan<char> input, ParsedNumbers groups)
+    private static bool IsGroupFulfilled(ReadOnlySpan<char> input, ParsedNumbers<int> groups)
     {
         Span<Range> groupRange = stackalloc Range[100];
         var actualGroups = input.Split(groupRange, '.', StringSplitOptions.RemoveEmptyEntries);

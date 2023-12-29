@@ -26,7 +26,13 @@ public static class InputParser
         return actualSize;
     }
 
-    public static ParsedNumbers ParseNumbers(ref Span<int> numbers, ReadOnlySpan<char> input, int maxSize, string separator = " ")
+    public static ParsedNumbers<T> ParseNumbers<T>(
+        ref Span<T> numbers,
+        ReadOnlySpan<char> input,
+        int maxSize,
+        string separator = " "
+    )
+        where T : INumber<T>
     {
         Span<Range> ranges = stackalloc Range[numbers.Length];
 
@@ -39,18 +45,19 @@ public static class InputParser
 
             if (!value.IsEmpty)
             {
-                numbers[actualSize] = int.Parse(value, null);
+                numbers[actualSize] = T.Parse(value, null);
                 actualSize++;
             }
         }
 
-        return new ParsedNumbers(ref numbers, actualSize);
+        return new ParsedNumbers<T>(ref numbers, actualSize);
     }
 }
 
-public readonly ref struct ParsedNumbers(ref Span<int> numbers, int actualLength)
+public readonly ref struct ParsedNumbers<T>(ref Span<T> numbers, int actualLength)
+    where T : INumber<T>
 {
-    public ReadOnlySpan<int> Numbers { get; } = numbers;
+    public ReadOnlySpan<T> Numbers { get; } = numbers;
 
     public int Length { get; } = actualLength;
 }
