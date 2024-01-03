@@ -1,3 +1,4 @@
+global using System.Numerics;
 global using AOC2023.Problems;
 global using BenchmarkDotNet.Attributes;
 global using Xunit;

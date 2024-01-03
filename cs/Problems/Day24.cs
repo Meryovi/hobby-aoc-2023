@@ -1,62 +1,58 @@
 namespace AOC2023.Problems;
 
-public class Day24(ITestOutputHelper? output = null) : IProblem<int>
+public class Day24 : IProblem<int>
 {
     public int Solve(ReadOnlySpan<char> input) => CountHailIntersections(input);
 
-    private int CountHailIntersections(ReadOnlySpan<char> input)
+    private static int CountHailIntersections(ReadOnlySpan<char> input)
     {
-        Span<Range> lineRanges = stackalloc Range[300];
+        Span<Range> lineRanges = stackalloc Range[301];
         int lines = input.Split(lineRanges, Environment.NewLine);
 
-        var hailStones = new Hailstone[lines];
+        var firstLine = input[lineRanges[0]];
+        long minTime = long.Parse(firstLine[..firstLine.IndexOf(' ')]);
+        long maxTime = long.Parse(firstLine[(firstLine.IndexOf(' ') + 1)..]);
 
-        for (int i = 0; i < lines; i++)
+        Span<Hailstone> hailStones = stackalloc Hailstone[lines];
+
+        for (int i = 1; i < lines; i++)
             hailStones[i] = Hailstone.Parse(i, input[lineRanges[i]]);
 
         int intersects = 0;
 
-        for (int i = 0; i < lines - 1; i++)
+        for (int i = 1; i < lines - 1; i++)
         for (int j = i + 1; j < lines; j++)
-            intersects += hailStones[i].Intersects(hailStones[j], 200000000000000, 400000000000000.99, output) ? 1 : 0;
+            intersects += hailStones[i].Intersects(hailStones[j], minTime, maxTime) ? 1 : 0;
 
         return intersects;
     }
 
-    readonly record struct Hailstone(int Id, Point Location, Velocity Velocity)
+    readonly record struct Hailstone(int Id, Point Position, Velocity Velocity)
     {
-        public readonly bool Intersects(Hailstone other, double minTime, double maxTime, ITestOutputHelper? output)
+        public readonly bool Intersects(Hailstone other, long minTime, long maxTime)
         {
-            var c1 = Velocity.VY * Location.X - Velocity.VX * Location.Y;
-            var c2 = other.Velocity.VY * other.Location.X - other.Velocity.VX * other.Location.Y;
+            // Intersection of dimensional lines formula, found it somewhere else.
+            decimal determinant = Velocity.VX * other.Velocity.VY - Velocity.VY * other.Velocity.VX;
 
-            if (Velocity.VY * -other.Velocity.VX == -Velocity.VX * other.Velocity.VY)
+            if (determinant == 0)
                 return false;
 
-            var x =
-                (c1 * -other.Velocity.VX - c2 * -Velocity.VX)
-                / (double)(Velocity.VY * -other.Velocity.VX - other.Velocity.VY * -Velocity.VX);
+            decimal t1 = Velocity.VX * Position.Y - Velocity.VY * Position.X;
+            decimal t2 = other.Velocity.VX * other.Position.Y - other.Velocity.VY * other.Position.X;
 
-            var y =
-                (c2 * Velocity.VY - c1 * other.Velocity.VY)
-                / (double)(Velocity.VY * -other.Velocity.VX - other.Velocity.VY * -Velocity.VX);
+            decimal xIntersect = (other.Velocity.VX * t1 - Velocity.VX * t2) / determinant;
+            decimal yIntersect = (other.Velocity.VY * t1 - Velocity.VY * t2) / determinant;
 
-            if (minTime <= x && x <= maxTime && minTime <= y && y <= maxTime)
-            {
-                if (
-                    (x - Location.X) * Velocity.VX >= 0
-                    && (y - Location.Y) * Velocity.VY >= 0
-                    && (x - other.Location.X) * other.Velocity.VX >= 0
-                    && (y - other.Location.Y) * other.Velocity.VY >= 0
-                )
-                {
-                    // output?.WriteLine($"{Id} v {other.Id} - x {x}, y {y}");
-                    return true;
-                }
-            }
+            if (xIntersect < minTime || xIntersect > maxTime || yIntersect < minTime || yIntersect > maxTime)
+                return false;
 
-            // Returns the intersection point, as well as the timestamp at which "one" will reach it with the given velocity.
-            return false;
+            bool thisPastIntersect = Math.Sign(xIntersect - Position.X) != Math.Sign(Velocity.VX);
+            bool otherPastIntersect = Math.Sign(xIntersect - other.Position.X) != Math.Sign(other.Velocity.VX);
+
+            if (thisPastIntersect || otherPastIntersect)
+                return false;
+
+            return true;
         }
 
         public static Hailstone Parse(int id, ReadOnlySpan<char> hailString)
