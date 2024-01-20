@@ -7,27 +7,28 @@ public class Day3 : IProblem<int>
     private static int ExtractPartNumber(ReadOnlySpan<char> input)
     {
         Span<Range> lineRanges = stackalloc Range[140];
-        var count = input.Split(lineRanges, Environment.NewLine);
+        int count = input.Split(lineRanges, InputReader.NewLine);
 
         var matrix = new char[count, count];
 
-        for (int i = 0; i < count; i++)
         for (int j = 0; j < count; j++)
-            matrix[i, j] = input[lineRanges[i]][j];
+        for (int i = 0; i < count; i++)
+            matrix[j, i] = input[lineRanges[j]][i];
 
         int partNumber = 0;
 
-        for (int i = 0; i < count; i++)
+        for (int j = 0; j < count; j++)
         {
             bool adjacentSymbol = false;
             int accumulator = 0;
 
-            for (int j = 0; j < count; j++)
+            for (int i = 0; i < count; i++)
             {
-                if (char.IsDigit(matrix[i, j]))
+                if (char.IsDigit(matrix[j, i]))
                 {
-                    accumulator = accumulator * 10 + (matrix[i, j] - '0');
-                    adjacentSymbol |= !adjacentSymbol && HasAdjacentSymbol(matrix, i, j, count);
+                    accumulator = accumulator * 10 + (matrix[j, i] - '0');
+                    if (!adjacentSymbol)
+                        adjacentSymbol = HasAdjacentSymbol(matrix, j, i, count);
                 }
                 else if (accumulator > 0)
                 {
@@ -43,18 +44,12 @@ public class Day3 : IProblem<int>
         return partNumber;
     }
 
-    private static bool HasAdjacentSymbol(char[,] lines, int row, int col, int size)
+    private static bool HasAdjacentSymbol(char[,] lines, int col, int row, int size)
     {
+        for (int y = Math.Max(0, col - 1); y <= Math.Min(size - 1, col + 1); y++)
         for (int x = Math.Max(0, row - 1); x <= Math.Min(size - 1, row + 1); x++)
-        {
-            for (int y = Math.Max(0, col - 1); y <= Math.Min(size - 1, col + 1); y++)
-            {
-                if ((x != row || y != col) && lines[x, y] != '.' && !char.IsDigit(lines[x, y]))
-                {
-                    return true;
-                }
-            }
-        }
+            if ((x != row || y != col) && lines[y, x] != '.' && !char.IsDigit(lines[y, x]))
+                return true;
 
         return false;
     }

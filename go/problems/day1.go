@@ -13,7 +13,7 @@ func (d Day1) Solve(input string) int {
 
 func sumFirstAndLastDigits(input string) int {
 	sum := 0
-	for _, line := range strings.Split(input, "\n") {
+	for _, line := range strings.Split(input, NewLine) {
 		d1, d2 := 0, 0
 
 		for i, j := 0, len(line)-1; j >= 0 && (d1 == 0 || d2 == 0); i, j = i+1, j-1 {

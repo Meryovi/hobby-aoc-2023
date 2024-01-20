@@ -7,25 +7,26 @@ public class Day11 : IProblem<int>
     private int SumDistanceBetweenGalaxies(ReadOnlySpan<char> input)
     {
         Span<Range> lineRanges = stackalloc Range[140];
-        int lines = input.Split(lineRanges, Environment.NewLine);
+        int lines = input.Split(lineRanges, InputReader.NewLine);
 
-        var range = new int[lines];
+        var emptyCols = new List<int>(lines);
+        var emptyRows = new List<int>(lines);
 
-        for (int i = 0; i < lines; i++)
-            range[i] = lines - i;
-
-        var emptyCols = new List<int>(range);
-        var emptyRows = new List<int>(range);
+        for (int j = 0; j < lines; j++)
+        {
+            emptyCols.Add(lines - j);
+            emptyRows.Add(lines - j);
+        }
 
         Span<Point> galaxies = stackalloc Point[450];
         int galaxyCount = 0;
 
-        for (int i = lines - 1; i >= 0; i--)
+        for (int j = lines - 1; j >= 0; j--)
         {
-            var line = input[lineRanges[i]];
-            for (int j = line.Length - 1; j >= 0; j--)
+            var line = input[lineRanges[j]];
+            for (int i = line.Length - 1; i >= 0; i--)
             {
-                if (line[j] == '#')
+                if (line[i] == '#')
                 {
                     galaxies[galaxyCount++] = new Point(i, j);
                     emptyCols.Remove(j);
@@ -39,10 +40,10 @@ public class Day11 : IProblem<int>
             var galaxy = galaxies[i];
 
             foreach (int col in emptyCols)
-                galaxy.Y += col > galaxy.Y ? 0 : 1;
+                galaxy.Y += col <= galaxy.Y ? 1 : 0;
 
             foreach (int row in emptyRows)
-                galaxy.X += row > galaxy.X ? 0 : 1;
+                galaxy.X += row <= galaxy.X ? 1 : 0;
 
             galaxies[i] = galaxy;
         }

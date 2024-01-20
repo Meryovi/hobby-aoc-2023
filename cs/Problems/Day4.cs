@@ -9,17 +9,18 @@ public class Day4 : IProblem<int>
         int cardPoints = 0;
         Span<Range> gameLines = stackalloc Range[200];
 
-        int count = input.Split(gameLines, Environment.NewLine);
+        int count = input.Split(gameLines, InputReader.NewLine);
         for (int i = 0; i < count; i++)
         {
             var game = input[gameLines[i]];
             var numbers = game[(game.IndexOf(":") + 1)..];
 
             var separator = numbers.IndexOf('|');
-            var winnersSlice = numbers[..(separator - 1)];
             var foundSlice = numbers[(separator + 1)..];
+            var winnersSlice = numbers[..(separator - 1)];
 
             int gamePoints = 0;
+
             for (int j = 0; j < foundSlice.Length; j += 3)
             {
                 bool exists = winnersSlice.Contains(foundSlice[j..(j + 3)], StringComparison.Ordinal);

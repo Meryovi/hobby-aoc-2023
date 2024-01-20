@@ -7,7 +7,7 @@ public class Day9 : IProblem<long>
     private static long PredictEnvironmentalInstabilities(ReadOnlySpan<char> input)
     {
         Span<Range> lineRanges = stackalloc Range[200];
-        int lines = input.Split(lineRanges, Environment.NewLine);
+        int lines = input.Split(lineRanges, InputReader.NewLine);
 
         Span<int> environmentReadings = stackalloc int[25];
         long totalInstabilities = 0;
@@ -16,7 +16,6 @@ public class Day9 : IProblem<long>
         {
             int readings = InputParser.ParseNumbers(environmentReadings, input[lineRanges[i]]);
             int prediction = PredictNextSequenceValue(environmentReadings, readings);
-
             totalInstabilities += prediction;
         }
 

@@ -7,7 +7,7 @@ public class Day22 : IProblem<int>
     private int CountSafelyDisintegratedBlocks(ReadOnlySpan<char> input)
     {
         Span<Range> lineRanges = stackalloc Range[1500];
-        int lines = input.Split(lineRanges, Environment.NewLine);
+        int lines = input.Split(lineRanges, InputReader.NewLine);
 
         Span<Block> blocks = stackalloc Block[lines];
 
@@ -20,7 +20,7 @@ public class Day22 : IProblem<int>
 
         var blockQueue = new Queue<Block>(lines / 2);
         var falling = new HashSet<Block>(lines);
-        var supportChain = SupportChain.BuildSupportChain(blocks); // This allocates all memory... :(
+        var supportChain = SupportChain.BuildSupportChain(blocks);
 
         foreach (var disintegratingBlock in blocks)
         {

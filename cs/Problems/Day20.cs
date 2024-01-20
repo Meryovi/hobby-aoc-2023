@@ -7,7 +7,7 @@ public class Day20 : IProblem<long>
     private static long CountNumberOfPulsesSent(ReadOnlySpan<char> input)
     {
         Span<Range> lineRanges = stackalloc Range[58];
-        int lines = input.Split(lineRanges, Environment.NewLine);
+        int lines = input.Split(lineRanges, InputReader.NewLine);
 
         var pulseSender = new PulseSender();
 
@@ -29,9 +29,9 @@ public class Day20 : IProblem<long>
 
         public int LowPulseCount { get; private set; }
 
-        private readonly Queue<(int Source, int Destination, Pulse Pulse)> pulseQueue = new();
+        readonly Queue<(int Source, int Destination, Pulse Pulse)> pulseQueue = new();
 
-        private readonly SortedList<int, IModule> destinations = [];
+        readonly SortedList<int, IModule> destinations = [];
 
         public readonly void RegisterDestination(IModule module) => destinations.Add(module.Name, module);
 
@@ -163,7 +163,7 @@ public class Day20 : IProblem<long>
 
         public void AddDependency(int source) => memory.TryAdd(source, Pulse.Low);
 
-        private Pulse GetNextPulse()
+        Pulse GetNextPulse()
         {
             foreach (var (_, lastPulse) in memory)
                 if (lastPulse == Pulse.Low)

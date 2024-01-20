@@ -9,7 +9,7 @@ public class Day1 : IProblem<int>
         Span<Range> gameLines = stackalloc Range[1000];
         int sum = 0;
 
-        int lines = input.Split(gameLines, Environment.NewLine);
+        int lines = input.Split(gameLines, InputReader.NewLine);
         for (int c = 0; c < lines; c++)
         {
             var line = input[gameLines[c]];

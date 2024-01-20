@@ -7,7 +7,7 @@ public class Day14 : IProblem<int>
     private static int TiltPlatformAndSumRockWeight(ReadOnlySpan<char> input)
     {
         Span<Range> lineRanges = stackalloc Range[100];
-        int height = input.Split(lineRanges, Environment.NewLine);
+        int height = input.Split(lineRanges, InputReader.NewLine);
         int width = input[lineRanges[0]].Length;
 
         var matrix = new char[height, width];

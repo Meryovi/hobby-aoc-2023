@@ -7,7 +7,7 @@ public class Day12 : IProblem<int>
     private int SumOfArrangementCounts(ReadOnlySpan<char> input)
     {
         Span<Range> lineRanges = stackalloc Range[1000];
-        int lines = input.Split(lineRanges, Environment.NewLine);
+        int lines = input.Split(lineRanges, InputReader.NewLine);
 
         int totalArrangements = 0;
 

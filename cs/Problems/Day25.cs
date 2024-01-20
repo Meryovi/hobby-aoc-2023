@@ -8,9 +8,9 @@ public class Day25 : IProblem<int>
     {
         Span<Range> lineRanges = stackalloc Range[1275];
         Span<Range> splitRanges = stackalloc Range[10];
-        int lines = input.Split(lineRanges, Environment.NewLine);
+        int lines = input.Split(lineRanges, InputReader.NewLine);
 
-        var edges = new List<(int, int)>(lines * 3);
+        var edges = new List<(int From, int To)>(lines * 3);
 
         for (int i = 0; i < lines; i++)
         {
@@ -30,17 +30,22 @@ public class Day25 : IProblem<int>
         return group1Size * group2Size;
     }
 
-    readonly ref struct KargerAlgorithm
+    // Found this algorithm somewhere else.
+    readonly struct KargerAlgorithm
     {
         private readonly int initialVerticesCount;
         private readonly List<(int From, int To)> initialEdges;
         private readonly Random rng = new(Seed: 72);
 
+        private readonly SortedList<int, List<int>> merged = [];
+        private readonly List<(int From, int To)> cache1 = [];
+        private readonly List<(int From, int To)> cache2 = [];
+
         public KargerAlgorithm(List<(int From, int To)> edges)
         {
-            initialEdges = edges ?? throw new ArgumentNullException(nameof(edges));
+            initialEdges = edges;
 
-            HashSet<int> uniqueVertices = [];
+            var uniqueVertices = new HashSet<int>();
             foreach (var (from, to) in edges)
             {
                 initialVerticesCount += uniqueVertices.Add(from) ? 1 : 0;
@@ -52,7 +57,11 @@ public class Day25 : IProblem<int>
         {
             var mergedEdges = initialEdges;
             var mergedVerticesCount = initialVerticesCount;
-            var merged = new SortedList<int, List<int>>();
+
+            // Clears and reuses list instances. Not amazing but otherwise this becomes a memory hog.
+            merged.Clear();
+            cache1.Clear();
+            cache2.Clear();
 
             while (mergedVerticesCount > 2)
             {
@@ -69,7 +78,8 @@ public class Day25 : IProblem<int>
                     merged.Remove(to);
                 }
 
-                var newEdges = new List<(int From, int To)>(mergedEdges.Count - 2);
+                var newEdges = cache1 == mergedEdges ? cache2 : cache1; // Prevents creating a new list on each iter.
+                newEdges.Clear();
 
                 foreach (var edge in mergedEdges)
                 {
@@ -89,7 +99,7 @@ public class Day25 : IProblem<int>
                     }
                 }
 
-                mergedEdges = newEdges;
+                (mergedEdges, _) = (newEdges, mergedEdges);
                 mergedVerticesCount--;
             }
 

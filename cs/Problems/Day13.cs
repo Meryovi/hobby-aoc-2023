@@ -8,14 +8,14 @@ public class Day13 : IProblem<int>
     {
         Span<Range> puzzleRanges = stackalloc Range[100];
         Span<Range> lineRanges = stackalloc Range[20];
-        int puzzles = input.Split(puzzleRanges, Environment.NewLine + Environment.NewLine);
+        int puzzles = input.Split(puzzleRanges, InputReader.NewLine + InputReader.NewLine);
 
         int summary = 0;
 
         for (int i = 0; i < puzzles; i++)
         {
             var rawPuzzle = input[puzzleRanges[i]];
-            int height = rawPuzzle.Split(lineRanges, Environment.NewLine);
+            int height = rawPuzzle.Split(lineRanges, InputReader.NewLine);
             int width = rawPuzzle[lineRanges[0]].Length;
 
             var puzzle = new char[height, width];

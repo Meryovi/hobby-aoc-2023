@@ -7,23 +7,23 @@ public class Day10 : IProblem<int>
     private static int FindFarthestTileFromStart(ReadOnlySpan<char> input)
     {
         Span<Range> lineRanges = stackalloc Range[140];
-        int lines = input.Split(lineRanges, Environment.NewLine);
+        int lines = input.Split(lineRanges, InputReader.NewLine);
 
-        var startingPoint = new Point(X: 0, Y: 0);
-        for (int i = 0; i < lines; i++)
+        var startingPoint = new Point(0, 0);
+        for (int y = 0; y < lines; y++)
         {
-            int index = input[lineRanges[i]].IndexOf('S');
-            if (index > -1)
+            int x = input[lineRanges[y]].IndexOf('S');
+            if (x > -1)
             {
-                startingPoint.X = index;
-                startingPoint.Y = i;
+                startingPoint.X = x;
+                startingPoint.Y = y;
                 break;
             }
         }
 
         int totalSteps = 0;
-        var location = new Point(startingPoint.X + 1, startingPoint.Y);
         var direction = Direction.Right;
+        var location = new Point(startingPoint.X + 1, startingPoint.Y);
 
         while (location != startingPoint)
         {

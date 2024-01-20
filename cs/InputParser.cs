@@ -1,5 +1,3 @@
-using System.Numerics;
-
 namespace AOC2023;
 
 public static class InputParser

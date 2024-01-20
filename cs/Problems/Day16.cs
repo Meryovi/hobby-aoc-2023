@@ -7,7 +7,7 @@ public class Day16 : IProblem<int>
     private int CountEnergizedLightTiles(ReadOnlySpan<char> input)
     {
         Span<Range> lineRanges = stackalloc Range[110];
-        int height = input.Split(lineRanges, Environment.NewLine);
+        int height = input.Split(lineRanges, InputReader.NewLine);
         int width = input[lineRanges[0]].Length;
 
         var matrix = new char[height, width];

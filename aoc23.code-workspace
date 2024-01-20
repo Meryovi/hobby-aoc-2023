@@ -18,6 +18,7 @@
         }
     ],
     "settings": {
-        "cSpell.enabled": true
+        "cSpell.enabled": true,
+        "cSpell.words": ["accum", "curr", "dists"]
     }
 }

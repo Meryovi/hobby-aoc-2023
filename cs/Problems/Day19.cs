@@ -9,12 +9,12 @@ public class Day19 : IProblem<int>
         Span<Range> workflowRanges = stackalloc Range[600];
         Span<Range> partsRanges = stackalloc Range[210];
 
-        int separationInx = input.IndexOf(Environment.NewLine + Environment.NewLine);
+        int separationInx = input.IndexOf(InputReader.NewLine + InputReader.NewLine);
         var workflowStrings = input[..separationInx];
-        var partStrings = input[(separationInx + Environment.NewLine.Length * 2)..];
+        var partStrings = input[(separationInx + InputReader.NewLine.Length * 2)..];
 
-        int workflowCount = workflowStrings.Split(workflowRanges, Environment.NewLine);
-        int partsCount = partStrings.Split(partsRanges, Environment.NewLine);
+        int workflowCount = workflowStrings.Split(workflowRanges, InputReader.NewLine);
+        int partsCount = partStrings.Split(partsRanges, InputReader.NewLine);
 
         SortedList<int, Workflow> workflowMap =
             new() { { Workflow.Accepted.Code, Workflow.Accepted }, { Workflow.Rejected.Code, Workflow.Rejected } };

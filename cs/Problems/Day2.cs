@@ -13,7 +13,7 @@ public class Day2 : IProblem<int>
         int possibleGames = 0;
         int currentGame = 1;
 
-        int lines = games.Split(gameLines, Environment.NewLine);
+        int lines = games.Split(gameLines, InputReader.NewLine);
         for (int i = 0; i < lines; i++)
         {
             var game = games[gameLines[i]];

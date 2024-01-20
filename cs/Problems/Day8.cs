@@ -7,7 +7,7 @@ public class Day8 : IProblem<int>
     private int CountStepsThroughNodes(ReadOnlySpan<char> input)
     {
         Span<Range> lineRanges = stackalloc Range[716];
-        var lines = input.Split(lineRanges, Environment.NewLine);
+        var lines = input.Split(lineRanges, InputReader.NewLine);
 
         var nodes = new NodeList(size: lines - 2);
 

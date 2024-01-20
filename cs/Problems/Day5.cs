@@ -10,9 +10,9 @@ public class Day5 : IProblem<uint>
         Span<uint> seedsRange = stackalloc uint[20];
 
         int currentMap = 0;
-        var maps = new List<RangeMap>[] { [], [], [], [], [], [], [], };
+        var maps = new List<RangeDiff>[] { [], [], [], [], [], [], [], };
 
-        int lines = input.Split(linesRange, Environment.NewLine);
+        int lines = input.Split(linesRange, InputReader.NewLine);
         for (int i = 3; i < lines; i++)
         {
             var line = input[linesRange[i]];
@@ -20,20 +20,20 @@ public class Day5 : IProblem<uint>
             if (line.Contains(':'))
                 currentMap++;
             else if (!line.IsEmpty)
-                maps[currentMap].Add(RangeMap.Parse(line));
+                maps[currentMap].Add(RangeDiff.Parse(line));
         }
 
         uint lowest = uint.MaxValue;
 
-        var seedsString = input[(input.IndexOf(':') + 2)..input.IndexOf(Environment.NewLine)];
+        var seedsString = input[(input.IndexOf(':') + 2)..input.IndexOf(InputReader.NewLine)];
         int parsedSeeds = InputParser.ParseNumbers(seedsRange, seedsString);
 
         for (int i = 0; i < parsedSeeds; i++)
         {
-            var destination = seedsRange[i];
+            uint destination = seedsRange[i];
 
-            foreach (var item in maps)
-                destination += GetDiffForValueInRange(item, destination);
+            foreach (var ranges in maps)
+                destination += GetDiffForValueInRange(ranges, destination);
 
             lowest = Math.Min(lowest, destination);
         }
@@ -41,18 +41,18 @@ public class Day5 : IProblem<uint>
         return lowest;
     }
 
-    private static uint GetDiffForValueInRange(List<RangeMap> rangeMaps, uint value)
+    private static uint GetDiffForValueInRange(List<RangeDiff> ranges, uint value)
     {
-        foreach (var map in rangeMaps)
-            if (value >= map.Start && value <= map.End)
-                return map.Diff;
+        foreach (var range in ranges)
+            if (value >= range.Start && value <= range.End)
+                return range.Diff;
 
         return 0;
     }
 
-    readonly record struct RangeMap(uint Start, uint End, uint Diff)
+    readonly record struct RangeDiff(uint Start, uint End, uint Diff)
     {
-        public static RangeMap Parse(ReadOnlySpan<char> mapString)
+        public static RangeDiff Parse(ReadOnlySpan<char> mapString)
         {
             int separator1 = mapString.IndexOf(' ');
             int separator2 = mapString.LastIndexOf(' ');
@@ -61,7 +61,7 @@ public class Day5 : IProblem<uint>
             uint source = uint.Parse(mapString[(separator1 + 1)..separator2]);
             uint range = uint.Parse(mapString[(separator2 + 1)..]);
 
-            return new RangeMap(source, source + range - 1, destination - source);
+            return new RangeDiff(source, source + range - 1, destination - source);
         }
     }
 }

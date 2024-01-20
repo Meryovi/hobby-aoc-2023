@@ -1,8 +1,8 @@
 namespace AOC2023.Problems;
 
-public class Day23Tests(ITestOutputHelper output)
+public class Day23Tests
 {
-    private readonly Day23 sut = new(output);
+    private readonly Day23 sut = new();
 
     [Theory, InlineData(94)]
     public void TestSet_ShouldYield_Result(int expected)

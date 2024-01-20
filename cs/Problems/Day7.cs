@@ -8,7 +8,7 @@ public class Day7 : IProblem<int>
     {
         Span<Range> lineRanges = stackalloc Range[1000];
 
-        int lines = input.Split(lineRanges, Environment.NewLine);
+        int lines = input.Split(lineRanges, InputReader.NewLine);
         Span<CardDraw> draws = stackalloc CardDraw[lines];
 
         for (int i = 0; i < lines; i++)
@@ -38,6 +38,8 @@ public class Day7 : IProblem<int>
 
             return new CardDraw(drawValue, bid);
         }
+
+        public static int Compare(CardDraw first, CardDraw second) => first.DrawValue.CompareTo(second.DrawValue);
 
         static long CalculateDrawValue(ReadOnlySpan<char> drawnCards)
         {
@@ -78,7 +80,5 @@ public class Day7 : IProblem<int>
 
             return (drawType * 10_000_000_000) + drawValue;
         }
-
-        public static int Compare(CardDraw first, CardDraw second) => first.DrawValue.CompareTo(second.DrawValue);
     }
 }

@@ -7,7 +7,7 @@ public class Day24 : IProblem<int>
     private static int CountHailIntersections(ReadOnlySpan<char> input)
     {
         Span<Range> lineRanges = stackalloc Range[301];
-        int lines = input.Split(lineRanges, Environment.NewLine);
+        int lines = input.Split(lineRanges, InputReader.NewLine);
 
         var firstLine = input[lineRanges[0]];
         long minTime = long.Parse(firstLine[..firstLine.IndexOf(' ')]);
@@ -46,10 +46,10 @@ public class Day24 : IProblem<int>
             if (xIntersect < minTime || xIntersect > maxTime || yIntersect < minTime || yIntersect > maxTime)
                 return false;
 
-            bool thisPastIntersect = Math.Sign(xIntersect - Position.X) != Math.Sign(Velocity.VX);
-            bool otherPastIntersect = Math.Sign(xIntersect - other.Position.X) != Math.Sign(other.Velocity.VX);
+            bool thisIntersect = Math.Sign(xIntersect - Position.X) != Math.Sign(Velocity.VX);
+            bool otherIntersect = Math.Sign(xIntersect - other.Position.X) != Math.Sign(other.Velocity.VX);
 
-            if (thisPastIntersect || otherPastIntersect)
+            if (thisIntersect || otherIntersect)
                 return false;
 
             return true;

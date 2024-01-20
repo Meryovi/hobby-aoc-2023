@@ -9,7 +9,7 @@ public class Day6 : IProblem<int>
         Span<int> times = stackalloc int[10];
         Span<int> distances = stackalloc int[10];
 
-        int lineBreak = input.IndexOf(Environment.NewLine);
+        int lineBreak = input.IndexOf(InputReader.NewLine);
         int count = InputParser.ParseNumbers(times, input[5..lineBreak], separator: "  ");
         InputParser.ParseNumbers(distances, input[(lineBreak + 11)..], separator: "  ");
 
@@ -20,12 +20,8 @@ public class Day6 : IProblem<int>
             int wayToWin = 0;
 
             for (int j = 1; j < times[i] - 1; j++)
-            {
                 if (j * (times[i] - j) > distances[i])
-                {
                     wayToWin++;
-                }
-            }
 
             waysToWinProduct = Math.Max(waysToWinProduct, 1) * Math.Max(wayToWin, 1);
         }

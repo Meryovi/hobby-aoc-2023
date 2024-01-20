@@ -7,7 +7,7 @@ public class Day21 : IProblem<int>
     private static int CountNumberOfPlotsInSteps(ReadOnlySpan<char> input)
     {
         Span<Range> lineRanges = stackalloc Range[131];
-        int size = input.Split(lineRanges, Environment.NewLine);
+        int size = input.Split(lineRanges, InputReader.NewLine);
 
         int midpoint = size / 2;
         var nextVisits = new List<Point>(4 * 8);

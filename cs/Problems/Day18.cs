@@ -8,7 +8,7 @@ public class Day18 : IProblem<int>
     {
         Span<Range> lineRanges = stackalloc Range[664];
         Span<Range> instructionRanges = stackalloc Range[3];
-        int lines = input.Split(lineRanges, Environment.NewLine);
+        int lines = input.Split(lineRanges, InputReader.NewLine);
 
         int totalCubes = 0;
         var digger = new Point(0, 0);
