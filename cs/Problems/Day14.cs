@@ -16,7 +16,7 @@ public class Day14 : IProblem<int>
         for (int i = 0; i < width; i++)
             matrix[j, i] = input[lineRanges[j]][i];
 
-        int weight = 0;
+        int weightSum = 0;
 
         for (int j = 0; j < height; j++)
         {
@@ -25,7 +25,7 @@ public class Day14 : IProblem<int>
                 if (matrix[j, i] != 'O')
                     continue;
 
-                weight += height - j;
+                weightSum += height - j;
 
                 int moves = 0;
                 for (int k = j - 1; k >= 0; k--)
@@ -34,12 +34,12 @@ public class Day14 : IProblem<int>
                         break;
 
                     (matrix[k, i], matrix[j - moves, i]) = (matrix[j - moves, i], matrix[k, i]);
-                    weight++;
+                    weightSum++;
                     moves++;
                 }
             }
         }
 
-        return weight;
+        return weightSum;
     }
 }

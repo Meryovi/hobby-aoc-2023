@@ -17,25 +17,25 @@ public class Day12 : IProblem<int>
         return totalArrangements;
     }
 
-    private static int GetArrangementCount(ReadOnlySpan<char> input)
+    private static int GetArrangementCount(ReadOnlySpan<char> line)
     {
-        int separator = input.IndexOf(' ');
+        int separator = line.IndexOf(' ');
         Span<int> numbers = stackalloc int[6];
 
-        var problem = input[..separator];
-        var group = InputParser.ParseNumbers(ref numbers, input[(separator + 1)..], 8, ",");
+        var arrangement = line[..separator];
+        var group = InputParser.ParseNumbers(ref numbers, line[(separator + 1)..], 8, ",");
 
-        return GetArrangementCount(problem, group);
+        return GetArrangementCount(arrangement, group);
     }
 
-    private static int GetArrangementCount(ReadOnlySpan<char> input, ParsedNumbers<int> group)
+    private static int GetArrangementCount(ReadOnlySpan<char> arrangement, ParsedNumbers<int> group)
     {
-        int wildcard = input.IndexOf('?');
+        int wildcard = arrangement.IndexOf('?');
 
         if (wildcard == -1)
-            return IsGroupFulfilled(input, group) ? 1 : 0;
+            return IsGroupFulfilled(arrangement, group) ? 1 : 0;
 
-        var variation = input.ToArray();
+        var variation = arrangement.ToArray();
 
         variation[wildcard] = '#';
         int hashCount = GetArrangementCount(variation, group);

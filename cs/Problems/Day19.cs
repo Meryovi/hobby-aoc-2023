@@ -87,7 +87,7 @@ public class Day19 : IProblem<int>
             int separatorInx = stepString.IndexOf(':');
 
             if (separatorInx == -1)
-                return new WorkflowRule(string.GetHashCode(stepString[(separatorInx + 1)..]));
+                return new WorkflowRule(string.GetHashCode(stepString));
 
             char category = stepString[0];
             char operand = stepString[1];

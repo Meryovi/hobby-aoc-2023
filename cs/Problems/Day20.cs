@@ -152,9 +152,7 @@ public class Day20 : IProblem<long>
 
         public void ReceivePulse(int source, Pulse pulse, ref PulseSender sender)
         {
-            if (!memory.TryAdd(source, pulse))
-                memory[source] = pulse;
-
+            memory[source] = pulse;
             var newPulse = GetNextPulse();
 
             foreach (var destination in Destinations)

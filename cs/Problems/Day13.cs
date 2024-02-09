@@ -35,7 +35,7 @@ public class Day13 : IProblem<int>
         return summary;
     }
 
-    private static int GetHorizontalMirrorValue(char[,] input, int height, int width)
+    private static int GetHorizontalMirrorValue(char[,] puzzle, int height, int width)
     {
         for (int i = 0; i < height - 1; i++)
         {
@@ -45,7 +45,7 @@ public class Day13 : IProblem<int>
 
                 for (int x = 0; x < width; x++)
                 {
-                    if (input[jd, x] != input[ji, x])
+                    if (puzzle[jd, x] != puzzle[ji, x])
                         break;
 
                     reflections++;
@@ -62,7 +62,7 @@ public class Day13 : IProblem<int>
         return -1;
     }
 
-    private static int GetVerticalMirrorValue(char[,] input, int height, int width)
+    private static int GetVerticalMirrorValue(char[,] puzzle, int height, int width)
     {
         for (int i = 0; i < width - 1; i++)
         {
@@ -72,7 +72,7 @@ public class Day13 : IProblem<int>
 
                 for (int y = 0; y < height; y++)
                 {
-                    if (input[y, ji] != input[y, jd])
+                    if (puzzle[y, ji] != puzzle[y, jd])
                         break;
 
                     reflections++;

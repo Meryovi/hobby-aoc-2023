@@ -32,8 +32,8 @@ public class Day17 : IProblem<int>
                 if (pushed.HasValue && history.Add(pushed.Value))
                 {
                     var nextCrucible = pushed.Value;
-                    int nextValue = input[lineRanges[nextCrucible.Location.Y]][nextCrucible.Location.X] - '0';
-                    queue.Enqueue(nextCrucible, heatLoss + nextValue);
+                    int nextHeat = input[lineRanges[nextCrucible.Location.Y]][nextCrucible.Location.X] - '0';
+                    queue.Enqueue(nextCrucible, heatLoss + nextHeat);
                 }
             }
         }
