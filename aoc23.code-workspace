@@ -19,6 +19,6 @@
     ],
     "settings": {
         "cSpell.enabled": true,
-        "cSpell.words": ["accum", "curr", "dists"]
+        "cSpell.words": ["accum", "curr", "dists", "Karger"]
     }
 }

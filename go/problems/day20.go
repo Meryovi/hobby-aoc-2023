@@ -61,7 +61,7 @@ func (ps *pulseSender) FollowPulse(msg pulseMessage) {
 
 	for len(ps.queue) != 0 {
 		next := ps.queue[0]
-		slices.Delete(ps.queue, 0, 1)
+		ps.queue = slices.Delete(ps.queue, 0, 1)
 
 		if mod, ok := ps.destinations[next.Destination]; ok {
 			mod.ReceivePulse(next, ps)

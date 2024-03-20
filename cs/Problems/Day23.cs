@@ -35,8 +35,6 @@ public class Day23 : IProblem<int>
     {
         private readonly Dictionary<Point, List<Edge>> graph = [];
 
-        private readonly HashSet<Point> visited = [];
-
         public void BuildGraph(char[,] grid)
         {
             int maxY = grid.GetLength(0);
@@ -47,7 +45,6 @@ public class Day23 : IProblem<int>
             var next = new List<Point>();
 
             graph.Clear();
-            visited.Clear();
             foreach (var node in nodes)
             {
                 queue.Clear();
@@ -98,13 +95,7 @@ public class Day23 : IProblem<int>
             int max = int.MinValue;
 
             foreach (var edge in graph[current])
-            {
-                if (!visited.Add(edge.To))
-                    continue;
-
-                max = Math.Max(GetLongestTrail(current = edge.To, length + edge.Length), max);
-                visited.Remove(edge.To);
-            }
+                max = Math.Max(GetLongestTrail(edge.To, length + edge.Length), max);
 
             return max;
         }

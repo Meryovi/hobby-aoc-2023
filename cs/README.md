@@ -14,34 +14,35 @@ You can also go to Program.cs and tweak the runner to run the benchmark for a sp
 All projects regardless of programming language should follow a similar structure and approach.
 My personal goal for the C# problems is to solve them using a coding style that minimizes heap allocations, but keeping a balance with readability and conciseness.
 
-Since my goal is not to boast some impressive mathematical skills, the following problems were solved with the help of the internet: 17, 20, 21, 22, 23, 25
+Since my goal is not to boast some impressive mathematical skills, the following problems were solved with help from the internet:
+17, 20, 21, 22, 23, 25
 
-Latest benchmark (ran on .NET 8, Windows 11, AMD Ryzen 7 5825U 8 cores, 16GB RAM)
+Latest benchmark, ran on .NET 8, Windows 11, 13th Gen Intel Core i5 - 16 Cores, 16GB RAM, on input 1 of each problem, results as follows:
 
-| Type            | Method          |          Mean |         Error |       StdDev |           Min |           Max |   Gen0 | Allocated |
-| --------------- | --------------- | ------------: | ------------: | -----------: | ------------: | ------------: | -----: | --------: |
-| Day1Benchmarks  | 'Day1 problem'  |     158.41 ns |     49.452 ns |     2.711 ns |     155.29 ns |     160.16 ns |      - |         - |
-| Day2Benchmarks  | 'Day2 problem'  |     726.47 ns |    207.270 ns |    11.361 ns |     713.36 ns |     733.40 ns |      - |         - |
-| Day3Benchmarks  | 'Day3 problem'  |     777.10 ns |    304.040 ns |    16.665 ns |     758.87 ns |     791.55 ns | 0.0286 |     240 B |
-| Day4Benchmarks  | 'Day4 problem'  |     579.40 ns |    745.799 ns |    40.880 ns |     545.61 ns |     624.84 ns |      - |         - |
-| Day5Benchmarks  | 'Day5 problem'  |   1,303.29 ns |    107.317 ns |     5.882 ns |   1,297.42 ns |   1,309.19 ns | 0.0954 |     808 B |
-| Day6Benchmarks  | 'Day6 problem'  |     219.66 ns |     72.537 ns |     3.976 ns |     217.03 ns |     224.23 ns |      - |         - |
-| Day7Benchmarks  | 'Day7 problem'  |     412.56 ns |    129.166 ns |     7.080 ns |     407.39 ns |     420.63 ns | 0.0238 |     200 B |
-| Day8Benchmarks  | 'Day8 problem'  |     361.13 ns |    368.712 ns |    20.210 ns |     343.89 ns |     383.37 ns | 0.0391 |     328 B |
-| Day9Benchmarks  | 'Day9 problem'  |     492.91 ns |    164.095 ns |     8.995 ns |     482.81 ns |     500.06 ns |      - |         - |
-| Day10Benchmarks | 'Day10 problem' |     127.86 ns |     30.932 ns |     1.695 ns |     126.88 ns |     129.82 ns |      - |         - |
-| Day11Benchmarks | 'Day11 problem' |      544.3 ns |      49.83 ns |      2.73 ns |      541.4 ns |      546.9 ns | 0.0229 |     192 B |
-| Day12Benchmarks | 'Day12 problem' |     530.48 ns |    199.630 ns |    10.942 ns |     520.10 ns |     541.91 ns | 0.0334 |     280 B |
-| Day13Benchmarks | 'Day13 problem' |     775.69 ns |    363.676 ns |    19.934 ns |     759.66 ns |     798.01 ns | 0.0439 |     368 B |
-| Day14Benchmarks | 'Day14 problem' |     580.95 ns |    116.418 ns |     6.381 ns |     573.83 ns |     586.15 ns | 0.0286 |     240 B |
-| Day15Benchmarks | 'Day15 problem' |      42.44 ns |      3.479 ns |     0.191 ns |      42.25 ns |      42.63 ns |      - |         - |
-| Day16Benchmarks | 'Day16 problem' |     762.81 ns |    194.163 ns |    10.643 ns |     752.97 ns |     774.11 ns | 0.0458 |     384 B |
-| Day17Benchmarks | 'Day17 problem' |      64.42 ns |     71.213 ns |     3.903 ns |      60.49 ns |      68.30 ns | 0.0219 |     184 B |
-| Day18Benchmarks | 'Day18 problem' |     764.78 ns |    736.416 ns |    40.365 ns |     732.20 ns |     809.93 ns |      - |         - |
-| Day19Benchmarks | 'Day19 problem' |   2,494.62 ns |  1,032.136 ns |    56.575 ns |   2,431.08 ns |   2,539.52 ns | 0.1869 |    1576 B |
-| Day20Benchmarks | 'Day20 problem' | 200,687.15 ns | 38,630.241 ns | 2,117.454 ns | 198,784.00 ns | 202,968.05 ns |      - |    1048 B |
-| Day21Benchmarks | 'Day21 problem' | 118,370.56 ns | 35,304.717 ns | 1,935.171 ns | 116,274.15 ns | 120,088.60 ns |      - |     920 B |
-| Day22Benchmarks | 'Day22 problem' |   2,919.15 ns |  1,071.649 ns |    58.741 ns |   2,851.37 ns |   2,955.29 ns | 0.4463 |    3736 B |
-| Day23Benchmarks | 'Day23 problem' |  10,544.46 ns |  5,839.414 ns |   320.078 ns |  10,258.08 ns |  10,889.99 ns | 0.4578 |    3856 B |
-| Day24Benchmarks | 'Day24 problem' |   1,992.63 ns |    691.898 ns |    37.925 ns |   1,961.99 ns |   2,035.04 ns |      - |         - |
-| Day25Benchmarks | 'Day25 problem' |  23,030.64 ns |  4,844.720 ns |   265.555 ns |  22,783.44 ns |  23,311.36 ns | 1.5869 |   13304 B |
+| Method          |          Mean |         Error |       StdDev |           Min |           Max |   Gen0 | Allocated |
+| --------------- | ------------: | ------------: | -----------: | ------------: | ------------: | -----: | --------: |
+| 'Day1 problem'  |      98.14 ns |     31.417 ns |     1.722 ns |      96.77 ns |     100.07 ns |      - |         - |
+| 'Day2 problem'  |     539.98 ns |    508.785 ns |    27.888 ns |     515.92 ns |     570.54 ns |      - |         - |
+| 'Day3 problem'  |     676.28 ns |    315.191 ns |    17.277 ns |     665.82 ns |     696.23 ns | 0.0381 |     240 B |
+| 'Day4 problem'  |     466.99 ns |    491.688 ns |    26.951 ns |     436.32 ns |     486.87 ns |      - |         - |
+| 'Day5 problem'  |   1,031.08 ns |    236.857 ns |    12.983 ns |   1,020.32 ns |   1,045.50 ns | 0.1278 |     808 B |
+| 'Day6 problem'  |     164.23 ns |    106.640 ns |     5.845 ns |     158.85 ns |     170.45 ns |      - |         - |
+| 'Day7 problem'  |     311.49 ns |    125.943 ns |     6.903 ns |     303.62 ns |     316.49 ns | 0.0315 |     200 B |
+| 'Day8 problem'  |     229.23 ns |     60.614 ns |     3.322 ns |     225.82 ns |     232.45 ns | 0.0520 |     328 B |
+| 'Day9 problem'  |     341.14 ns |    150.309 ns |     8.239 ns |     332.94 ns |     349.42 ns |      - |         - |
+| 'Day10 problem' |     123.05 ns |    608.752 ns |    33.368 ns |      94.25 ns |     159.62 ns |      - |         - |
+| 'Day11 problem' |     438.28 ns |    176.557 ns |     9.678 ns |     430.26 ns |     449.03 ns | 0.0305 |     192 B |
+| 'Day12 problem' |     653.81 ns |    602.778 ns |    33.040 ns |     621.54 ns |     687.57 ns | 0.0439 |     280 B |
+| 'Day13 problem' |     521.87 ns |    638.486 ns |    34.998 ns |     498.60 ns |     562.12 ns | 0.0534 |     336 B |
+| 'Day14 problem' |     452.46 ns |    180.051 ns |     9.869 ns |     444.50 ns |     463.50 ns | 0.0381 |     240 B |
+| 'Day15 problem' |      35.73 ns |      7.103 ns |     0.389 ns |      35.29 ns |      36.01 ns |      - |         - |
+| 'Day16 problem' |     551.33 ns |    194.925 ns |    10.684 ns |     542.95 ns |     563.36 ns | 0.0610 |     384 B |
+| 'Day17 problem' |      44.74 ns |     28.257 ns |     1.549 ns |      43.77 ns |      46.53 ns | 0.0293 |     184 B |
+| 'Day18 problem' |     538.05 ns |    476.532 ns |    26.120 ns |     509.22 ns |     560.15 ns |      - |         - |
+| 'Day19 problem' |   1,816.61 ns |    545.593 ns |    29.906 ns |   1,788.44 ns |   1,848.00 ns | 0.2460 |    1544 B |
+| 'Day20 problem' | 149,962.87 ns | 83,620.592 ns | 4,583.527 ns | 147,267.97 ns | 155,255.18 ns |      - |    1048 B |
+| 'Day21 problem' |  98,525.92 ns | 68,102.685 ns | 3,732.938 ns |  94,215.49 ns | 100,683.18 ns | 0.1221 |     920 B |
+| 'Day22 problem' |   2,101.71 ns |  3,358.475 ns |   184.089 ns |   1,990.65 ns |   2,314.20 ns | 0.5951 |    3736 B |
+| 'Day23 problem' |   8,558.24 ns |  5,574.310 ns |   305.547 ns |   8,314.04 ns |   8,900.87 ns | 0.5493 |    3488 B |
+| 'Day24 problem' |   1,420.83 ns |    704.720 ns |    38.628 ns |   1,378.40 ns |   1,453.96 ns |      - |         - |
+| 'Day25 problem' |  17,999.46 ns |  8,307.824 ns |   455.380 ns |  17,659.25 ns |  18,516.79 ns | 2.1057 |   13304 B |
