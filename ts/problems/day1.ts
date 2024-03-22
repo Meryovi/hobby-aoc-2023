@@ -1,14 +1,17 @@
-const sumFirstLastDigits = (input: string) =>
-  input
-    .split("\r\n")
-    .map((str) => {
-      let [d1, d2] = [0, 0];
-      for (let i = 0, j = str.length - 1; j >= 0 && (!d1 || !d2); i++, j--) {
-        if (!d1 && Number(str[i])) d1 = Number(str[i]);
-        if (!d2 && Number(str[j])) d2 = Number(str[j]);
-      }
-      return d1 * 10 + d2;
-    })
-    .reduce((acc, val) => acc + val, 0);
+import { NEW_LINE } from "../inputReader.js";
 
-export const solve = sumFirstLastDigits;
+const sumAllFirstLastDigits = (input: string) =>
+  input
+    .split(NEW_LINE)
+    .map(sumFirstLastDigits)
+    .reduce((sum, val) => sum + val, 0);
+
+const sumFirstLastDigits = (input: string) => {
+  const digits = input
+    .split("")
+    .map(Number)
+    .filter((num) => !isNaN(num));
+  return digits[0] * 10 + digits.at(-1)!;
+};
+
+export const solve = sumAllFirstLastDigits;

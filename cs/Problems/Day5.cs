@@ -17,7 +17,7 @@ public class Day5 : IProblem<uint>
         {
             var line = input[linesRange[i]];
 
-            if (line.Contains(':'))
+            if (line.EndsWith(":"))
                 currentMap++;
             else if (!line.IsEmpty)
                 maps[currentMap].Add(RangeDiff.Parse(line));

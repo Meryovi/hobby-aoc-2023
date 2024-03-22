@@ -6,4 +6,6 @@ To run this project:
 
 **Goals:**
 All projects regardless of programming language should have a similar structure and approach.
-My personal goal for the TypeScript problems is to resolve them using a concise coding style without sacrificing too much readability.
+My personal goal for the TypeScript problems is to resolve them using a concise, mostly functional, coding style without sacrificing too much readability.
+
+For this one I'll only do the fun ones. :)

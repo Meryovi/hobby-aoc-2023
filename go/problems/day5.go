@@ -23,7 +23,7 @@ func findLowestSeedLocation(input string) int64 {
 			continue
 		}
 
-		if strings.Contains(line, ":") {
+		if strings.HasSuffix(line, ":") {
 			currMap++
 			rngMaps[currMap] = make([]day5Range, 0, 2)
 		} else {

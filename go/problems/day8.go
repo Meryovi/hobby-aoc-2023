@@ -18,11 +18,11 @@ func countStepsThroughNodes(input string) int {
 	}
 
 	steps := 0
-	node := nl.GetFirst()
+	node := nl.GetStartingNode()
 
 	for node != nil {
 		inst := steps % len(instructions[0])
-		node = nl.GetNext(node, instructions[0][inst])
+		node = nl.GetNextNode(node, instructions[0][inst])
 		steps++
 	}
 
@@ -33,8 +33,8 @@ type day8NodeList struct {
 	store map[string]day8Node
 }
 
-const firstNodeVal = "AAA"
-const lastNodeVal = "ZZZ"
+const startNodeVal = "AAA"
+const endNodeVal = "ZZZ"
 
 func newNodeList() *day8NodeList {
 	nl := day8NodeList{}
@@ -47,22 +47,22 @@ func (nl *day8NodeList) AppendNode(nodeStr string) {
 	nl.store[node.Value] = node
 }
 
-func (nl *day8NodeList) GetNext(current *day8Node, dir byte) *day8Node {
+func (nl *day8NodeList) GetNextNode(current *day8Node, dir byte) *day8Node {
 	nextVal := current.Right
 	if dir == 'L' {
 		nextVal = current.Left
 	}
 
 	next, ok := nl.store[nextVal]
-	if !ok || next.Value == lastNodeVal {
+	if !ok || next.Value == endNodeVal {
 		return nil
 	}
 
 	return &next
 }
 
-func (nl *day8NodeList) GetFirst() *day8Node {
-	first := nl.store[firstNodeVal]
+func (nl *day8NodeList) GetStartingNode() *day8Node {
+	first := nl.store[startNodeVal]
 	return &first
 }
 

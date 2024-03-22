@@ -9,20 +9,20 @@ public class Day8 : IProblem<int>
         Span<Range> lineRanges = stackalloc Range[716];
         var lines = input.Split(lineRanges, InputReader.NewLine);
 
-        var nodes = new NodeList(size: lines - 2);
+        var nodeList = new NodeList(size: lines - 2);
 
         for (int i = 2; i < lines; i++)
-            nodes.AppendNode(input[lineRanges[i]]);
+            nodeList.AppendNode(input[lineRanges[i]]);
 
         int steps = 0;
         var instructions = input[lineRanges[0]];
 
-        Node? current = nodes.GetFirst();
+        Node? current = nodeList.GetStartingNode();
 
         while (current is not null)
         {
             int instruction = steps % instructions.Length;
-            current = nodes.GetNext(current!.Value, instructions[instruction]);
+            current = nodeList.GetNextNode(current!.Value, instructions[instruction]);
             steps++;
         }
 
@@ -31,8 +31,8 @@ public class Day8 : IProblem<int>
 
     readonly ref struct NodeList(int size)
     {
-        static readonly int FIRST_NODE = "AAA".GetHashCode();
-        static readonly int LAST_NODE = "ZZZ".GetHashCode();
+        static readonly int START_NODE = "AAA".GetHashCode();
+        static readonly int END_NODE = "ZZZ".GetHashCode();
 
         private readonly Dictionary<int, Node> store = new(size);
 
@@ -40,13 +40,13 @@ public class Day8 : IProblem<int>
 
         public void AppendNode(Node node) => store.Add(node.Value, node);
 
-        public Node GetFirst() => store[FIRST_NODE];
+        public Node GetStartingNode() => store[START_NODE];
 
-        public Node? GetNext(Node current, char direction)
+        public Node? GetNextNode(Node current, char direction)
         {
             var nextValue = direction == 'L' ? current.Left : current.Right;
             var next = store[nextValue];
-            return next.Value == LAST_NODE ? null : next;
+            return next.Value == END_NODE ? null : next;
         }
     }
 

@@ -8,7 +8,6 @@ public class Day2 : IProblem<int>
     {
         Span<Range> gameLines = stackalloc Range[99];
         Span<Range> drawRanges = stackalloc Range[18];
-        Span<char> cubeSeparators = [',', ';'];
 
         int possibleGames = 0;
         int currentGame = 1;
@@ -19,7 +18,7 @@ public class Day2 : IProblem<int>
             var game = games[gameLines[i]];
             game = game[(game.IndexOf(": ") + 2)..];
 
-            int draws = game.SplitAny(drawRanges, cubeSeparators);
+            int draws = game.SplitAny(drawRanges, [',', ';']);
             bool possible = true;
 
             for (int draw = 0; draw < draws && possible; draw++)
