@@ -49,4 +49,4 @@ type CardDraw = {
   bid: number;
 };
 
-export const solve = calculateTotalCardWinnings;
+export default calculateTotalCardWinnings;

@@ -17,4 +17,4 @@ const isValidDraw = ([count, cube]: string[]) =>
   (cube === "green" && Number(count) <= 13) ||
   (cube === "blue" && Number(count) <= 14);
 
-export const solve = numberOfPossibleGames;
+export default numberOfPossibleGames;

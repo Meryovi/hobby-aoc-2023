@@ -67,4 +67,4 @@ class Node {
   }
 }
 
-export const solve = countStepsThroughNodes;
+export default countStepsThroughNodes;

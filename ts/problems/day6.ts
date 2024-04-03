@@ -19,4 +19,4 @@ const calculateNumberOfWaysToWin = ([timesString, distanceString]: string[]) => 
 
 const safelyParseNumbers = (input: string) => input.match(/[\d]+/g)!.map(Number);
 
-export const solve = numberOfWaysToWin;
+export default numberOfWaysToWin;

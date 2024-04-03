@@ -21,9 +21,9 @@ public class Day18 : IProblem<int>
             char direction = line[instructionRanges[0]][0];
             int steps = int.Parse(line[instructionRanges[1]]);
 
-            var end = digger.Move(direction, steps);
-            totalCubes += digger.X * end.Y - digger.Y * end.X + steps; // Gauss
-            digger = end;
+            var destination = digger.Move(direction, steps);
+            totalCubes += digger.X * destination.Y - digger.Y * destination.X + steps; // Gauss
+            digger = destination;
         }
 
         totalCubes = totalCubes / 2 + 1;

@@ -15,4 +15,4 @@ const calculateGamePoints = (game: string) => {
     .reduce((gamePoints, draw) => (winnerCards.includes(draw) ? Math.max(1, gamePoints * 2) : gamePoints), 0);
 };
 
-export const solve = calculateScratchCardPoints;
+export default calculateScratchCardPoints;

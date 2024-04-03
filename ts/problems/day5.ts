@@ -39,4 +39,4 @@ type RangeDiff = {
   diff: number;
 };
 
-export const solve = findLowestSeedLocation;
+export default findLowestSeedLocation;

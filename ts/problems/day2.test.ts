@@ -1,7 +1,7 @@
 import test, { describe } from "node:test";
 import assert from "node:assert";
 
-import { solve } from "./day2.js";
+import solve from "./day2.js";
 import { readProblemInput } from "../inputReader.js";
 
 describe("Day 2", () => {

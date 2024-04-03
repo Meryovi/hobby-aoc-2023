@@ -14,4 +14,4 @@ const sumFirstLastDigits = (input: string) => {
   return digits[0] * 10 + digits.at(-1)!;
 };
 
-export const solve = sumAllFirstLastDigits;
+export default sumAllFirstLastDigits;

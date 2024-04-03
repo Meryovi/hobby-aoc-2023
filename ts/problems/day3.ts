@@ -33,4 +33,4 @@ const hasAdjacentSymbol = (matrix: string[], col: number, row: number) => {
   return false;
 };
 
-export const solve = extractPartNumber;
+export default extractPartNumber;
