@@ -32,7 +32,7 @@ class NodeList {
   }
 
   GetNextNode(current: Node, direction: string) {
-    const nextValue = direction === "L" ? current.Left : current.Right;
+    const nextValue = direction === "L" ? current.left : current.right;
     if (nextValue === NodeList.END_NODE) return null;
 
     const next = this.#store[nextValue];
@@ -46,19 +46,19 @@ class NodeList {
   }
 
   private AddNode(node: Node) {
-    this.#store[node.Value] = node;
+    this.#store[node.value] = node;
   }
 }
 
 class Node {
-  Value: string;
-  Left: string;
-  Right: string;
+  value: string;
+  left: string;
+  right: string;
 
   constructor(value: string, left: string, right: string) {
-    this.Value = value;
-    this.Left = left;
-    this.Right = right;
+    this.value = value;
+    this.left = left;
+    this.right = right;
   }
 
   static Parse(nodeString: string) {

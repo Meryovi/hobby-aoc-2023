@@ -10,10 +10,10 @@ const findFarthestTile = (matrix: string[]) => {
 
   let totalSteps = 0;
   let direction = Direction.Right;
-  let currentPoint = new Point(startingPoint.X + 1, startingPoint.Y);
+  let currentPoint = new Point(startingPoint.x + 1, startingPoint.y);
 
   while (!currentPoint.equals(startingPoint)) {
-    const pipe = matrix[currentPoint.Y][currentPoint.X];
+    const pipe = matrix[currentPoint.y][currentPoint.x];
     [currentPoint, direction] = moveBasedOnChar(pipe, currentPoint, direction);
     totalSteps++;
   }
@@ -30,24 +30,24 @@ enum Direction {
 }
 
 class Point {
-  X: number;
-  Y: number;
+  x: number;
+  y: number;
 
   constructor(x: number, y: number) {
-    this.X = x;
-    this.Y = y;
+    this.x = x;
+    this.y = y;
   }
 
   move(direction: Direction) {
-    if (direction === Direction.Up) this.Y--;
-    else if (direction === Direction.Down) this.Y++;
-    else if (direction === Direction.Left) this.X--;
-    else if (direction === Direction.Right) this.X++;
+    if (direction === Direction.Up) this.y--;
+    else if (direction === Direction.Down) this.y++;
+    else if (direction === Direction.Left) this.x--;
+    else if (direction === Direction.Right) this.x++;
     return [this, direction] as const;
   }
 
   equals(other: Point) {
-    return this.X === other.X && this.Y === other.Y;
+    return this.x === other.x && this.y === other.y;
   }
 }
 

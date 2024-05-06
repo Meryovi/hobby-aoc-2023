@@ -4,7 +4,7 @@ const countEnergizedLightTiles = (input: string) => startBeamAndCountTiles(input
 
 const startBeamAndCountTiles = (matrix: string[]) => {
   const history: number[][] = Array.from(matrix).map(() => new Array(matrix[0].length).fill(0));
-  const beam: FacingPoint = { X: 0, Y: 0, Direction: Direction.Right };
+  const beam: FacingPoint = { x: 0, y: 0, direction: Direction.Right };
 
   startLightBeam(beam, matrix, history);
 
@@ -17,13 +17,13 @@ const startLightBeam = (beam: FacingPoint, matrix: string[], history: number[][]
   const width = matrix[0].length;
 
   while (!isOffsetBeam(beam, width, height)) {
-    const visits = history[beam.Y][beam.X];
-    if (visits & beam.Direction) break;
+    const visits = history[beam.y][beam.x];
+    if (visits & beam.direction) break;
 
-    history[beam.Y][beam.X] |= beam.Direction;
+    history[beam.y][beam.x] |= beam.direction;
 
-    const instruction = matrix[beam.Y][beam.X];
-    const navigation = `${instruction},${beam.Direction}`;
+    const instruction = matrix[beam.y][beam.x];
+    const navigation = `${instruction},${beam.direction}`;
 
     if (navigation === "|,1" || navigation === "|,2") {
       startLightBeam(splitLightBeam(beam, Direction.Up), matrix, history);
@@ -46,7 +46,7 @@ const splitLightBeam = (lightBeam: FacingPoint, direction: Direction) => {
 };
 
 const isOffsetBeam = (beam: FacingPoint, width: number, height: number) =>
-  beam.X < 0 || beam.Y < 0 || beam.X >= width || beam.Y >= height;
+  beam.x < 0 || beam.y < 0 || beam.x >= width || beam.y >= height;
 
 enum Direction {
   Right = 1,
@@ -56,10 +56,10 @@ enum Direction {
 }
 
 const navigationMap: Record<Direction, (point: FacingPoint) => FacingPoint> = {
-  [Direction.Up]: (point: FacingPoint) => (point.Y--, (point.Direction = Direction.Up), point),
-  [Direction.Down]: (point: FacingPoint) => (point.Y++, (point.Direction = Direction.Down), point),
-  [Direction.Left]: (point: FacingPoint) => (point.X--, (point.Direction = Direction.Left), point),
-  [Direction.Right]: (point: FacingPoint) => (point.X++, (point.Direction = Direction.Right), point),
+  [Direction.Up]: (point: FacingPoint) => (point.y--, (point.direction = Direction.Up), point),
+  [Direction.Down]: (point: FacingPoint) => (point.y++, (point.direction = Direction.Down), point),
+  [Direction.Left]: (point: FacingPoint) => (point.x--, (point.direction = Direction.Left), point),
+  [Direction.Right]: (point: FacingPoint) => (point.x++, (point.direction = Direction.Right), point),
 };
 
 const oppositeDirectionMap = {
@@ -78,13 +78,13 @@ const beamInstructionMap: Record<string, (beam: FacingPoint) => void> = {
   "\\,2": (beam) => moveLightBeam(beam, Direction.Up),
   "\\,4": (beam) => moveLightBeam(beam, Direction.Left),
   "\\,8": (beam) => moveLightBeam(beam, Direction.Right),
-  wildcard: (beam) => moveLightBeam(beam, beam.Direction),
+  wildcard: (beam) => moveLightBeam(beam, beam.direction),
 };
 
 type FacingPoint = {
-  X: number;
-  Y: number;
-  Direction: Direction;
+  x: number;
+  y: number;
+  direction: Direction;
 };
 
 export default countEnergizedLightTiles;
